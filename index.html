@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>Wordle Helper</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="/dist/styles.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 min-h-screen p-6">
+<div class="max-w-xl mx-auto bg-white p-6 rounded-2xl shadow">
+  <h1 class="text-2xl font-bold mb-6">Wordle Helper</h1>
+
+  <div class="mb-6">
+    <h2 class="font-semibold mb-2">Korrekte Positionen</h2>
+    <div id="correct-row" class="flex gap-2"></div>
+  </div>
+
+  <div class="mb-6">
+    <h2 class="font-semibold mb-2">
+      Buchstaben vorhanden (falsche Position)
+    </h2>
+    <div id="present-row" class="flex gap-2 mb-3"></div>
+    <div id="present-config" class="space-y-2"></div>
+  </div>
+
+  <div class="mb-6">
+    <h2 class="font-semibold mb-2">Nicht enthalten</h2>
+    <input
+            id="absent"
+            class="w-full border p-2 rounded"
+            placeholder="z. B. tios"
+    />
+  </div>
+
+  <div>
+    <h2 class="font-semibold">
+      Treffer: <span id="count">0</span>
+    </h2>
+    <ul id="results" class="mt-2 space-y-1 text-lg"></ul>
+  </div>
+</div>
+
+<script type="module" src="/src/main.ts"></script>
+</body>
+</html>
