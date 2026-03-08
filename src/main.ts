@@ -1,8 +1,8 @@
 import "./style.css";
-import { state } from "./state/store";
-import { filterWords } from "./logic/filter";
+import {ALLOWED_CHARACTERS_REGEX, DISALLOWED_CHARACTERS_REGEX, MAX_CHARACTERS, WORD_LIST_URI} from "./constants.ts";
+import { WordleState} from "./state/store";
 import { createLetterRow } from "./components/LetterRow";
-import { renderPresentConfig } from "./components/PresentLetterConfig";
+import { renderPresentConfig } from "./components/PresentLetters.ts";
 
 const correctRow = document.getElementById("correct-row")!;
 const presentRow = document.getElementById("present-row")!;
@@ -11,46 +11,65 @@ const resultsEl = document.getElementById("results")!;
 const countEl = document.getElementById("count")!;
 const presentConfig = document.getElementById("present-config")!;
 
-function update() {
-    const matches = filterWords(state);
+const wordleState = new WordleState(
+    MAX_CHARACTERS,
+    showPossibleWords,
+    (state) => {
+        renderPresentConfig(
+            presentConfig,
+            state
+        )
+    }
+);
 
-    countEl.textContent = String(matches.length);
+const correctInputs = createLetterRow(
+    correctRow,
+    MAX_CHARACTERS,
+    ALLOWED_CHARACTERS_REGEX,
+    'bg-green-300',
+    'focus:bg-green-500',
+    (letters) => { wordleState.setCorrectLetters(letters); }
+);
+
+createLetterRow(
+    presentRow,
+    MAX_CHARACTERS,
+    ALLOWED_CHARACTERS_REGEX,
+    'bg-yellow-200',
+    'focus:bg-yellow-400',
+    (letters) => { wordleState.setPresentLetters(letters) }
+);
+
+absentInput.pattern = ALLOWED_CHARACTERS_REGEX.source;
+absentInput.autocomplete = 'off'
+absentInput.addEventListener("input", () => {
+    const clean = absentInput.value
+        .toUpperCase()
+        .replace(DISALLOWED_CHARACTERS_REGEX, "");
+    absentInput.value = clean;
+    wordleState.setAbsentLetters(clean)
+});
+
+// Wortliste laden
+fetch(WORD_LIST_URI)
+    .then((r) => r.text())
+    .then((text) => {
+        const wordList = text
+            .split("\n")
+            .map((word) => word.trim().toUpperCase())
+            .filter((word) => word.length === 5);
+        wordleState.setWordList(wordList);
+    });
+
+function showPossibleWords(words: string[]) {
+    countEl.textContent = String(words.length);
+
     resultsEl.innerHTML = "";
-
-    matches.slice(0, 10).forEach((w) => {
+    words.slice(0, 10).forEach((word) => {
         const li = document.createElement("li");
-        li.textContent = w;
+        li.textContent = word;
         resultsEl.appendChild(li);
     });
 }
 
-createLetterRow(correctRow, (letters) => {
-    state.correct = letters;
-    update();
-});
-
-createLetterRow(presentRow, (letters) => {
-    state.present = new Set(letters.filter(Boolean));
-    renderPresentConfig(presentConfig, update);
-    update();
-});
-
-absentInput.addEventListener("input", () => {
-    const clean = absentInput.value
-        .toLowerCase()
-        .replace(/[^a-z]/g, "");
-    absentInput.value = clean;
-    state.absent = new Set(clean.split(""));
-    update();
-});
-
-// Wortliste laden
-fetch("/en/5.txt")
-    .then((r) => r.text())
-    .then((text) => {
-        state.wordList = text
-            .split("\n")
-            .map((w) => w.trim().toLowerCase())
-            .filter((w) => w.length === 5);
-        update();
-    });
+correctInputs[0].focus()

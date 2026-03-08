@@ -1,56 +1,91 @@
 export function createLetterRow(
     container: HTMLElement,
+    letterCount: number,
+    allowedCharacters: RegExp,
+    color: string,
+    colorFocus: string,
     onChange: (letters: string[]) => void
 ) {
-    const inputs: HTMLInputElement[] = [];
-
-    function emit() {
-        onChange(inputs.map((i) => i.value));
+    if (letterCount <= 0) {
+        throw new Error("Letter count must be greater than 0");
     }
 
-    for (let i = 0; i < 5; i++) {
+    const inputs: HTMLInputElement[] = [];
+
+    function fireOnChange() {
+        const letters = inputs.map((i) => i.value)
+        onChange(letters);
+    }
+
+
+    for (let i = 0; i < letterCount; ++i) {
         const input = document.createElement("input");
+        input.type = "text";
         input.maxLength = 1;
+        input.value = "";
+        input.autocomplete = "off"
+        input.pattern = allowedCharacters.source
         input.className =
-            "w-12 h-12 text-center text-xl border rounded-lg";
+            `w-12 h-12 text-center text-xl border rounded-lg caret-transparent ${color} ${colorFocus} transition-colors duration-500 outline-none`;
 
         input.addEventListener("keydown", (e) => {
             const key = e.key;
+            const upperKey = key.toUpperCase();
 
-            if (key === "ArrowRight" && i < 4) {
-                inputs[i + 1].focus();
-                e.preventDefault();
+            if (key === "ArrowRight") {
+                selectNext()
+            }
+            if (key === "ArrowLeft") {
+                selectPrevious()
             }
 
-            if (key === "ArrowLeft" && i > 0) {
-                inputs[i - 1].focus();
-                e.preventDefault();
+            if (key === "Tab") {
+                if (e.shiftKey) {
+                    selectPrevious()
+                } else {
+                    selectNext()
+                }
             }
 
-            if (key === "Backspace" && !input.value && i > 0) {
-                inputs[i - 1].focus();
+            if (key === "Backspace") {
+                if (hasValue()) {
+                    setValue("")
+                } else {
+                    selectPrevious()
+                    setValue("", -1)
+                }
+                fireOnChange()
             }
+
+            if (allowedCharacters.test(upperKey)) {
+                setValue(upperKey)
+                selectNext()
+                fireOnChange()
+            }
+
+            if (/\s/.test(key)) {
+                setValue("")
+                fireOnChange()
+            }
+
+            e.preventDefault()
         });
-
-        input.addEventListener("input", () => {
-            let v = input.value.toLowerCase();
-
-            if (v === " ") {
-                input.value = "";
-                if (i < 4) inputs[i + 1].focus();
-                return;
-            }
-
-            if (!/^[a-z]$/.test(v)) {
-                input.value = "";
-                return;
-            }
-
-            input.value = v;
-
-            if (i < 4) inputs[i + 1].focus();
-            emit();
-        });
+        function hasValue(): boolean {
+            return inputs[i].value.length > 0
+        }
+        function setValue(value: string, relativeIndex: number = 0) {
+            inputs[i + relativeIndex].value = value;
+        }
+        function selectNext() {
+            select(i + 1)
+        }
+        function selectPrevious() {
+            select(i - 1)
+        }
+        function select(index: number) {
+            const safeIndex = Math.min(letterCount - 1, Math.max(0, index))
+            inputs[safeIndex].focus();
+        }
 
         inputs.push(input);
         container.appendChild(input);

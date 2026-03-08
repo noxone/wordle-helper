@@ -8,18 +8,20 @@
 </head>
 <body class="bg-gray-100 min-h-screen p-6">
 <div class="max-w-xl mx-auto bg-white p-6 rounded-2xl shadow">
-  <h1 class="text-2xl font-bold mb-6">Wordle Helper</h1>
+  <h1 class="text-3xl font-bold mb-6">Wordle Helper</h1>
 
   <div class="mb-6">
-    <h2 class="font-semibold mb-2">Korrekte Positionen</h2>
+    <h2 class="font-semibold mb-0">Korrekte Positionen</h2>
+    <p class="text-sm text-gray-500 mb-2">Gibt hier alle Buchstaben an, die sich an der richtigen Stelle befinden.</p>
     <div id="correct-row" class="flex gap-2"></div>
   </div>
 
   <div class="mb-6">
-    <h2 class="font-semibold mb-2">
-      Buchstaben vorhanden (falsche Position)
-    </h2>
+    <h2 class="font-semibold mb-0">Buchstaben vorhanden</h2>
+    <p class="text-sm text-gray-500 mb-2">Gibt hier alle Buchstaben an, die im Wort vorkommen, deren genau Position du aber noch nicht kennst.</p>
     <div id="present-row" class="flex gap-2 mb-3"></div>
+    <!--<input type="checkbox" id="present-checkbox"/>
+    <label for="present-checkbox" class="text-sm text-gray-500">Erweiterte Auswahl für vorhandene Buchstaben</label>-->
     <div id="present-config" class="space-y-2"></div>
   </div>
 
@@ -28,7 +30,7 @@
     <input
             id="absent"
             class="w-full border p-2 rounded"
-            placeholder="z. B. tios"
+            placeholder="z. B. TIOS"
     />
   </div>
 
