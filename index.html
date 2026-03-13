@@ -19,7 +19,14 @@
   <div class="mb-6">
     <h2 class="font-semibold mb-0">Buchstaben vorhanden</h2>
     <p class="text-sm text-gray-500 mb-2">Gibt hier alle Buchstaben an, die im Wort vorkommen, deren genau Position du aber noch nicht kennst.</p>
-    <div id="present-row" class="flex gap-2 mb-3"></div>
+    <div class="flex place-content-between">
+      <div id="present-row" class="flex gap-2 mb-3"></div>
+      <button class="rounded bg-gray-200">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+        </svg>
+      </button>
+    </div>
     <!--<input type="checkbox" id="present-checkbox"/>
     <label for="present-checkbox" class="text-sm text-gray-500">Erweiterte Auswahl für vorhandene Buchstaben</label>-->
     <div id="present-config" class="space-y-2"></div>

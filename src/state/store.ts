@@ -2,22 +2,6 @@ export type PresentRules = {
     [letter: string]: Set<number>;
 };
 
-export type AppState = {
-    correct: string[];
-    present: Set<string>;
-    absent: Set<string>;
-    presentRules: PresentRules;
-    wordList: string[];
-};
-
-export const state: AppState = {
-    correct: ["", "", "", "", ""],
-    present: new Set(),
-    absent: new Set(),
-    presentRules: {},
-    wordList: [],
-};
-
 export class WordleState {
     readonly letterCount: number;
     private wordList: string[] = [];
@@ -42,6 +26,14 @@ export class WordleState {
         }
     }
 
+    public isLetterValidForCorrect(letter: string): boolean {
+        return !this.absentLetters.includes(letter)
+    }
+
+    public isLetterValidForPresent(letter: string): boolean {
+        return !this.absentLetters.includes(letter) && !this.presentLetters.includes(letter)
+    }
+
     private update() {
         const possibleWords = this.wordList
             .filter(this.wordMatchesCorrectLetters)
@@ -50,13 +42,13 @@ export class WordleState {
         this.onUpdate(possibleWords);
     }
 
-    public setWordList(wordList: string[]) {
-        this.wordList = wordList;
-    }
-
     public setCorrectLetters(letters: string[]) {
         this.correctLetters = letters;
         this.update()
+    }
+
+    public getCorrectLetters(): string[] {
+        return this.correctLetters;
     }
 
     public setPresentLetters(letters: string[]) {
@@ -65,7 +57,7 @@ export class WordleState {
         this.update()
     }
 
-    public getPresentLetters() {
+    public getPresentLetters(): string[] {
         return [...this.presentLetters];
     }
 
@@ -123,4 +115,23 @@ export class WordleState {
             .reduce((acc, cur) => {return acc || cur}, false)
         return !contains;
     }
+
+    private setWordList(wordList: string[]) {
+        this.wordList = wordList;
+        this.update();
+    }
+
+    public loadWordList(uri: string): void {
+        // Wortliste laden
+        fetch(uri)
+            .then((r) => r.text())
+            .then((text) => {
+                    const wordList = text
+                        .split("\n")
+                        .map((word) => word.trim().toUpperCase())
+                        .filter((word) => word.length === this.letterCount);
+                    this.setWordList(wordList);
+                });
+    }
+
 }

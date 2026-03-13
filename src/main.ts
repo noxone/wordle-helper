@@ -3,6 +3,7 @@ import {ALLOWED_CHARACTERS_REGEX, DISALLOWED_CHARACTERS_REGEX, MAX_CHARACTERS, W
 import { WordleState} from "./state/store";
 import { createLetterRow } from "./components/LetterRow";
 import { renderPresentConfig } from "./components/PresentLetters.ts";
+import {createAbsentLetters} from "./components/AbsentLetters.ts";
 
 const correctRow = document.getElementById("correct-row")!;
 const presentRow = document.getElementById("present-row")!;
@@ -22,44 +23,36 @@ const wordleState = new WordleState(
     }
 );
 
-const correctInputs = createLetterRow(
+const correctLetters = createLetterRow(
     correctRow,
     MAX_CHARACTERS,
     ALLOWED_CHARACTERS_REGEX,
+    true,
     'bg-green-300',
     'focus:bg-green-500',
+    (letter) => { return wordleState.isLetterValidForCorrect(letter) },
     (letters) => { wordleState.setCorrectLetters(letters); }
 );
 
-createLetterRow(
+const presentLetters = createLetterRow(
     presentRow,
     MAX_CHARACTERS,
     ALLOWED_CHARACTERS_REGEX,
+    false,
     'bg-yellow-200',
     'focus:bg-yellow-400',
+    (letter) => { return wordleState.isLetterValidForPresent(letter) },
     (letters) => { wordleState.setPresentLetters(letters) }
 );
 
-absentInput.pattern = ALLOWED_CHARACTERS_REGEX.source;
-absentInput.autocomplete = 'off'
-absentInput.addEventListener("input", () => {
-    const clean = absentInput.value
-        .toUpperCase()
-        .replace(DISALLOWED_CHARACTERS_REGEX, "");
-    absentInput.value = clean;
-    wordleState.setAbsentLetters(clean)
-});
+const absentLetters = createAbsentLetters(
+    absentInput,
+    ALLOWED_CHARACTERS_REGEX,
+    DISALLOWED_CHARACTERS_REGEX,
+    wordleState
+);
 
-// Wortliste laden
-fetch(WORD_LIST_URI)
-    .then((r) => r.text())
-    .then((text) => {
-        const wordList = text
-            .split("\n")
-            .map((word) => word.trim().toUpperCase())
-            .filter((word) => word.length === 5);
-        wordleState.setWordList(wordList);
-    });
+wordleState.loadWordList(WORD_LIST_URI);
 
 function showPossibleWords(words: string[]) {
     countEl.textContent = String(words.length);
@@ -72,4 +65,4 @@ function showPossibleWords(words: string[]) {
     });
 }
 
-correctInputs[0].focus()
+correctLetters.focus(0)

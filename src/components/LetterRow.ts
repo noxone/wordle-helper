@@ -1,9 +1,41 @@
+
+export class LetterRow {
+    private readonly inputs: HTMLInputElement[];
+
+    constructor(inputs: HTMLInputElement[]) {
+        this.inputs = inputs;
+    }
+
+    public focus(index: number | string) {
+        this.getItem(index).focus();
+    }
+
+    public highlight(index: number | string) {
+        const highlightClass = 'animate-bounce'
+        const item = this.getItem(index);
+        item.classList.add(highlightClass);
+        setTimeout(() => { item.classList.remove(highlightClass) }, 1000)
+    }
+
+    private getItem(index: number | string) {
+        if (typeof index === 'number') {
+            return this.inputs[index]
+        } else if (typeof index === 'string') {
+            return this.inputs.filter(input => { return input.value === index })[0];
+        } else {
+            throw new Error(`Unknown item ${index}`);
+        }
+    }
+}
+
 export function createLetterRow(
     container: HTMLElement,
     letterCount: number,
     allowedCharacters: RegExp,
+    allowDuplicates: boolean,
     color: string,
     colorFocus: string,
+    isLetterValid: (letter: string) => boolean,
     onChange: (letters: string[]) => void
 ) {
     if (letterCount <= 0) {
@@ -58,9 +90,11 @@ export function createLetterRow(
             }
 
             if (allowedCharacters.test(upperKey)) {
-                setValue(upperKey)
-                selectNext()
-                fireOnChange()
+                if (allowDuplicates || !doesValueExist(upperKey)) {
+                    setValue(upperKey)
+                    selectNext()
+                    fireOnChange()
+                }
             }
 
             if (/\s/.test(key)) {
@@ -72,6 +106,14 @@ export function createLetterRow(
         });
         function hasValue(): boolean {
             return inputs[i].value.length > 0
+        }
+        function doesValueExist(letter: string) {
+            for (let i = 0; i < letterCount; ++i) {
+                if (inputs[i].value === letter) {
+                    return true;
+                }
+            }
+            return false;
         }
         function setValue(value: string, relativeIndex: number = 0) {
             inputs[i + relativeIndex].value = value;
@@ -91,5 +133,5 @@ export function createLetterRow(
         container.appendChild(input);
     }
 
-    return inputs;
+    return new LetterRow(inputs);
 }
