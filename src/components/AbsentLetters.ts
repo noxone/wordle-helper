@@ -1,19 +1,11 @@
 import type {WordleState} from "../state/store.ts";
 
-export class AbsentLetters {
-    private readonly absentInput: HTMLInputElement;
-
-    constructor(absentInput: HTMLInputElement) {
-        this.absentInput = absentInput;
-    }
-}
-
 export function createAbsentLetters(
     absentInput: HTMLInputElement,
     allowedCharacters: RegExp,
     disallowedCharacters: RegExp,
     wordleState: WordleState,
-): AbsentLetters {
+) {
     absentInput.pattern = allowedCharacters.source;
     absentInput.autocomplete = 'off'
     absentInput.addEventListener("input", () => {
@@ -28,7 +20,5 @@ export function createAbsentLetters(
         absentInput.value = clean;
         wordleState.setAbsentLetters(clean)
     });
-
-    return new AbsentLetters(absentInput);
 }
 

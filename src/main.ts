@@ -3,7 +3,8 @@ import {ALLOWED_CHARACTERS_REGEX, DISALLOWED_CHARACTERS_REGEX, MAX_CHARACTERS, W
 import { WordleState} from "./state/store";
 import { createLetterRow } from "./components/LetterRow";
 import { renderPresentConfig } from "./components/PresentLetters.ts";
-import {createAbsentLetters} from "./components/AbsentLetters.ts";
+import { createAbsentLetters } from "./components/AbsentLetters.ts";
+import { PossibleWords } from "./components/PossibleWords.ts";
 
 const correctRow = document.getElementById("correct-row")!;
 const presentRow = document.getElementById("present-row")!;
@@ -12,9 +13,11 @@ const resultsEl = document.getElementById("results")!;
 const countEl = document.getElementById("count")!;
 const presentConfig = document.getElementById("present-config")!;
 
+const possibleWordsList = new PossibleWords(resultsEl, countEl);
+
 const wordleState = new WordleState(
     MAX_CHARACTERS,
-    showPossibleWords,
+    (words) => { possibleWordsList.showPossibleWords(words) },
     (state) => {
         renderPresentConfig(
             presentConfig,
@@ -45,7 +48,7 @@ const presentLetters = createLetterRow(
     (letters) => { wordleState.setPresentLetters(letters) }
 );
 
-const absentLetters = createAbsentLetters(
+createAbsentLetters(
     absentInput,
     ALLOWED_CHARACTERS_REGEX,
     DISALLOWED_CHARACTERS_REGEX,
@@ -53,16 +56,4 @@ const absentLetters = createAbsentLetters(
 );
 
 wordleState.loadWordList(WORD_LIST_URI);
-
-function showPossibleWords(words: string[]) {
-    countEl.textContent = String(words.length);
-
-    resultsEl.innerHTML = "";
-    words.slice(0, 10).forEach((word) => {
-        const li = document.createElement("li");
-        li.textContent = word;
-        resultsEl.appendChild(li);
-    });
-}
-
 correctLetters.focus(0)
