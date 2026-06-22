@@ -1,5 +1,15 @@
+import { filterWords } from "../logic/filter";
+
 export type PresentRules = {
     [letter: string]: Set<number>;
+};
+
+export type AppState = {
+    correct: string[];
+    present: Set<string>;
+    absent: Set<string>;
+    presentRules: PresentRules;
+    wordList: string[];
 };
 
 export class WordleState {
@@ -35,11 +45,14 @@ export class WordleState {
     }
 
     private update() {
-        const possibleWords = this.wordList
-            .filter(this.wordMatchesCorrectLetters)
-            .filter(this.wordContainsPresentLetters)
-            .filter(this.wordDoesNotContainAbsentLetters)
-        this.onUpdate(possibleWords);
+        const state: AppState = {
+            correct: this.correctLetters,
+            present: new Set(this.presentLetters.filter(l => l !== '')),
+            absent: new Set(this.absentLetters.split('').filter(l => l !== '')),
+            presentRules: this.presentRules,
+            wordList: this.wordList,
+        };
+        this.onUpdate(filterWords(state));
     }
 
     public setCorrectLetters(letters: string[]) {
@@ -80,40 +93,6 @@ export class WordleState {
     public setAbsentLetters(letters: string) {
         this.absentLetters = letters.toUpperCase();
         this.update()
-    }
-
-    private wordMatchesCorrectLetters = (word: string) => {
-        return this.correctLetters
-            .map((value, index) => {
-                return value === "" || word.at(index) === value
-            })
-            .reduce((acc, cur) => {return acc && cur}, true)
-    }
-
-    private wordContainsPresentLetters = (word: string) => {
-        return this.presentLetters
-            .filter((letter: string) => {return letter.length > 0})
-            .map((letter: string) => {return word.includes(letter) && this.wordFitsToPresentRule(word, letter)})
-            .reduce((acc, cur) => {return acc && cur}, true)
-    }
-
-    private wordFitsToPresentRule = (word: string, letter: string) => {
-        if (this.presentRules[letter] === undefined) {
-            return true;
-        }
-        return Array.from(this.presentRules[letter].values())
-            .map((value: number) => {
-                return word.at(value) === letter
-            })
-            .reduce((acc, cur) => {return acc && cur}, true)
-    }
-
-    private wordDoesNotContainAbsentLetters = (word: string) => {
-        const contains = this.absentLetters
-            .split('')
-            .map((letter: string) => {return word.includes(letter)})
-            .reduce((acc, cur) => {return acc || cur}, false)
-        return !contains;
     }
 
     private setWordList(wordList: string[]) {
