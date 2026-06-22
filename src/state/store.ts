@@ -1,16 +1,5 @@
 import { filterWords } from "../logic/filter";
-
-export type PresentRules = {
-    [letter: string]: Set<number>;
-};
-
-export type AppState = {
-    correct: string[];
-    present: Set<string>;
-    absent: Set<string>;
-    presentRules: PresentRules;
-    wordList: string[];
-};
+import type { FilterCriteria, PresentRules } from "../logic/filter";
 
 export class WordleState {
     readonly letterCount: number;
@@ -45,14 +34,14 @@ export class WordleState {
     }
 
     private update() {
-        const state: AppState = {
+        const criteria: FilterCriteria = {
             correct: this.correctLetters,
             present: new Set(this.presentLetters.filter(l => l !== '')),
             absent: new Set(this.absentLetters.split('').filter(l => l !== '')),
             presentRules: this.presentRules,
             wordList: this.wordList,
         };
-        this.onUpdate(filterWords(state));
+        this.onUpdate(filterWords(criteria));
     }
 
     public setCorrectLetters(letters: string[]) {

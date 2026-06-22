@@ -1,10 +1,10 @@
 import { describe, it, expect } from "vitest";
 import { filterWords } from "../logic/filter";
-import type {AppState} from "../state/store";
+import type { FilterCriteria } from "../logic/filter";
 
 describe("filterWords", () => {
     it("filters correctly", () => {
-        const state: AppState = {
+        const state: FilterCriteria = {
             correct: ["a", "", "", "", ""],
             present: new Set(["r"]),
             absent: new Set(["t"]),
@@ -18,7 +18,7 @@ describe("filterWords", () => {
     });
 
     it("excludes a word when a present letter appears at a forbidden position", () => {
-        const state: AppState = {
+        const state: FilterCriteria = {
             correct: ["", "", "", "", ""],
             present: new Set(["R"]),
             absent: new Set(),

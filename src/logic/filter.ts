@@ -1,10 +1,18 @@
-import type { AppState, PresentRules } from "../state/store";
+export type PresentRules = Record<string, Set<number>>;
 
-export function filterWords(state: AppState): string[] {
-    return state.wordList.filter(word =>
-        matchesCorrectLetters(word, state.correct)
-        && containsPresentLetters(word, state.present, state.presentRules)
-        && doesNotContainAbsent(word, state.absent)
+export type FilterCriteria = {
+    correct: string[];
+    present: Set<string>;
+    absent: Set<string>;
+    presentRules: PresentRules;
+    wordList: string[];
+};
+
+export function filterWords(criteria: FilterCriteria): string[] {
+    return criteria.wordList.filter(word =>
+        matchesCorrectLetters(word, criteria.correct)
+        && containsPresentLetters(word, criteria.present, criteria.presentRules)
+        && doesNotContainAbsent(word, criteria.absent)
     );
 }
 

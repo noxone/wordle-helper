@@ -32,13 +32,13 @@ The tool helps players of any Wordle variant filter candidate words based on let
 The filtering predicates are implemented in `src/logic/filter.ts` behind one standalone pure function:
 
 ```ts
-export function filterWords(state: AppState): string[]
+export function filterWords(criteria: FilterCriteria): string[]
 ```
 
-`AppState` and `PresentRules` are exported by `src/state/store.ts`:
+`FilterCriteria` and `PresentRules` are exported by `src/logic/filter.ts`:
 
 ```ts
-type AppState = {
+type FilterCriteria = {
   correct: string[]          // green letters, '' = unknown
   present: Set<string>       // yellow letters
   absent: Set<string>        // grey letters
@@ -49,7 +49,7 @@ type AppState = {
 }
 ```
 
-`WordleState` constructs this state and delegates to `filterWords`; it contains no duplicate filtering predicates.
+`WordleState` constructs these criteria and delegates to `filterWords`; it contains no duplicate filtering predicates.
 
 During completion, `presentRules` was corrected to use the specified exclusion semantics: a configured position is forbidden for that present letter.
 
