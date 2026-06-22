@@ -25,32 +25,39 @@ The tool helps players of any Wordle variant filter candidate words based on let
 
 ### F-1 · Extract Filter Logic + Fix Tests
 
-**Status:** Blocked — `src/tests/filter.test.ts` imports `../logic/filter` which does not exist.
+**Status:** Complete — verified June 22, 2026.
 
-**What to do:**
+**Implemented:**
 
-Extract the three filtering predicates from `WordleState` into a standalone pure function in `src/logic/filter.ts`:
+The filtering predicates are implemented in `src/logic/filter.ts` behind one standalone pure function:
 
 ```ts
-export function filterWords(state: AppState, wordList: string[]): string[]
+export function filterWords(state: AppState): string[]
 ```
 
-`AppState` is already defined in the test file:
+`AppState` and `PresentRules` are exported by `src/state/store.ts`:
+
 ```ts
 type AppState = {
-  correct: string[]       // green letters, '' = unknown
-  present: string[]       // yellow letters
-  absent: string[]        // grey letters
-  presentRules: Map<string, number[]>  // forbidden positions per letter
+  correct: string[]          // green letters, '' = unknown
+  present: Set<string>       // yellow letters
+  absent: Set<string>        // grey letters
+  presentRules: {
+    [letter: string]: Set<number> // forbidden positions per letter
+  }
+  wordList: string[]
 }
 ```
 
-`WordleState` should delegate to this function internally so no filtering logic is duplicated.
+`WordleState` constructs this state and delegates to `filterWords`; it contains no duplicate filtering predicates.
+
+During completion, `presentRules` was corrected to use the specified exclusion semantics: a configured position is forbidden for that present letter.
 
 **Acceptance criteria:**
-- `npm test` passes with zero failures
-- Existing filtering behaviour is unchanged
-- `filterWords` is the single source of filtering truth
+- [x] `npm test -- --run` passes with zero failures
+- [x] Correct, present, absent, and forbidden-position constraints are preserved
+- [x] `filterWords` is the single source of filtering truth
+- [x] `WordleState` delegates filtering to `filterWords`
 
 ---
 

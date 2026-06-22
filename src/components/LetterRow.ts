@@ -89,7 +89,7 @@ export function createLetterRow(
                 fireOnChange()
             }
 
-            if (allowedCharacters.test(upperKey)) {
+            if (allowedCharacters.test(upperKey) && isLetterValid(upperKey)) {
                 if (allowDuplicates || !doesValueExist(upperKey)) {
                     setValue(upperKey)
                     selectNext()

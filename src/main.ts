@@ -37,7 +37,7 @@ const correctLetters = createLetterRow(
     (letters) => { wordleState.setCorrectLetters(letters); }
 );
 
-const presentLetters = createLetterRow(
+createLetterRow(
     presentRow,
     MAX_CHARACTERS,
     ALLOWED_CHARACTERS_REGEX,

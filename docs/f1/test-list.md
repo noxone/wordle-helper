@@ -2,13 +2,15 @@
 
 ## Current Focus
 
-- [ ] keeps a word when a present letter appears outside its forbidden positions
+- None.
 
 ## Pending Tests
 
-- [ ] combines correct, present, and absent constraints through `filterWords`
+- None.
 
 ## Completed Tests
 
 - [x] excludes a word when a present letter appears at a forbidden position
+- [x] keeps a word when a present letter appears outside its forbidden positions (covered by the same focused test)
+- [x] combines correct, present, and absent constraints through `filterWords`
 - [x] delegates filtering through the standalone `filterWords` function
