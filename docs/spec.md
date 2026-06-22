@@ -75,7 +75,7 @@ Write unit tests in `src/tests/` covering:
 
 **Acceptance criteria:**
 - Vitest coverage report shows ≥80% line/branch coverage for `src/logic/`
-- All tests pass in CI (see F-6)
+- All tests pass in CI (see F-7)
 
 ---
 
@@ -159,18 +159,42 @@ The UI only shows length buttons for lengths that exist for the current language
 
 ---
 
-### F-5 · UX Improvements
+### F-5 · Application Test Coverage ≥ 80%
 
-#### F-5a · Reset Button
+**What to do:**
+
+Extend the test suite beyond the pure filter logic to cover application state, DOM components, and application wiring:
+
+- Add a browser-like Vitest environment such as `jsdom`
+- Test `WordleState` mutations, validation, resets, word-list loading, and update callbacks
+- Test DOM components by rendering them into a test document and exercising their user interactions
+- Add an application smoke test covering initialization and the connection between components and state
+- Mock browser APIs and external boundaries such as `fetch`, `localStorage`, and `navigator.language`
+- Report coverage for all application code under `src/`, not only `src/logic/`
+
+Tests should assert observable behavior and avoid depending on internal implementation details.
+
+**Acceptance criteria:**
+- Vitest coverage report shows ≥80% line and branch coverage across `src/`
+- `src/logic/`, `src/state/`, and `src/components/` are included in the enforced coverage threshold
+- Application initialization is covered by at least one browser-environment smoke test
+- Tests run deterministically without network access
+- All tests pass in CI (see F-7)
+
+---
+
+### F-6 · UX Improvements
+
+#### F-6a · Reset Button
 
 Add a "Zurücksetzen" button that clears all constraints (correct, present, absent) and resets the UI to its initial state. Does not change the language or word length.
 
-#### F-5b · Empty Results Feedback
+#### F-6b · Empty Results Feedback
 
 When the filtered word list is empty, show a clear message instead of a blank list:
 > *Keine Wörter gefunden. Bitte Eingaben prüfen.*
 
-#### F-5c · Result Count Display
+#### F-6c · Result Count Display
 
 Always show the total number of matches. When more than 10 words match, show:
 > *37 Wörter gefunden — die ersten 10 werden angezeigt.*
@@ -180,7 +204,7 @@ When ≤10 match, show:
 
 ---
 
-### F-6 · GitHub Actions CI/CD
+### F-7 · GitHub Actions CI/CD
 
 **What to do:**
 
@@ -204,7 +228,7 @@ Set `base` in `vite.config.ts` (or `vite.config.js`, create if missing) to the G
 
 ---
 
-### F-7 · Repository Cleanup
+### F-8 · Repository Cleanup
 
 - Remove `dist/` from git tracking (`git rm -r --cached dist/`) — it is already in `.gitignore`
 - Verify `.gitignore` covers `dist/`, `node_modules/`, and generated coverage reports
@@ -217,11 +241,12 @@ Set `base` in `vite.config.ts` (or `vite.config.js`, create if missing) to the G
 |---|---|---|
 | 1 | F-1 Extract filter + fix tests | — |
 | 2 | F-2 Test coverage ≥80% | F-1 |
-| 3 | F-7 Repository cleanup | — |
+| 3 | F-8 Repository cleanup | — |
 | 4 | F-3 Language selection | F-1 |
 | 5 | F-4 Variable word length | F-3 |
-| 6 | F-5 UX improvements | F-4 |
-| 7 | F-6 CI/CD + GitHub Pages | F-2, F-5 |
+| 6 | F-5 Application test coverage ≥80% | F-2, F-4 |
+| 7 | F-6 UX improvements | F-4 |
+| 8 | F-7 CI/CD + GitHub Pages | F-5, F-6 |
 
 ---
 
