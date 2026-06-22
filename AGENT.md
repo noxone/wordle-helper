@@ -5,11 +5,45 @@ A vanilla TypeScript + Vite web app that helps solve Wordle puzzles by filtering
 ## Commands
 
 ```bash
+npm install       # Install dependencies (requires Node.js 24)
 npm run dev       # Vite dev server with HMR (default port 5173)
 npm run build     # tsc --noEmit && vite build
 npm run preview   # Preview the production build locally
 npm test          # Vitest unit tests
 ```
+
+## Node.js version
+
+Use **Node.js 24 LTS** for development, tests, and builds. The required major
+version is declared in `package.json` under `engines.node`. Node.js 26 currently
+emits a `DEP0205` warning because the Tailwind CSS toolchain calls the deprecated
+`module.register()` API.
+
+On macOS, install Node.js 24 with Homebrew:
+
+```bash
+brew install node@24
+```
+
+Because `node@24` is keg-only, add it to the shell `PATH`.
+
+Apple Silicon:
+
+```bash
+echo 'export PATH="/opt/homebrew/opt/node@24/bin:$PATH"' >> ~/.zshrc
+source ~/.zshrc
+```
+
+Intel:
+
+```bash
+echo 'export PATH="/usr/local/opt/node@24/bin:$PATH"' >> ~/.zshrc
+source ~/.zshrc
+```
+
+Alternatively, use the
+[official Node.js 24 LTS installer](https://nodejs.org/en/download). Verify the
+active version with `node --version`.
 
 ## Architecture
 
