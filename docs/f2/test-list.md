@@ -2,23 +2,11 @@
 
 ## Current Focus
 
-- [ ] `it.todo("keeps a word that matches a correct letter at its configured position")`
+- None.
 
 ## Pending Tests
 
-- [ ] `it.todo("excludes a word that does not match a correct letter at its configured position")`
-- [ ] `it.todo("keeps a word that contains a present letter")`
-- [ ] `it.todo("excludes a word that does not contain a present letter")`
-- [ ] `it.todo("keeps a word that does not contain an absent letter")`
-- [ ] `it.todo("excludes a word that contains an absent letter")`
-- [ ] `it.todo("returns no words when absent letters eliminate every candidate")`
-- [ ] `it.todo("allows a present letter at any position when it has no position rule")`
-- [ ] `it.todo("allows a present letter outside all of its forbidden positions")`
-- [ ] `it.todo("excludes a present letter from each of its forbidden positions")`
-- [ ] `it.todo("returns no words when correct and present constraints conflict")`
-- [ ] `it.todo("returns no words when the same letter is both correct and absent")`
-- [ ] `it.todo("filters words with fewer than five letters")`
-- [ ] `it.todo("filters words with more than five letters")`
+- None.
 
 ## Refactoring / Design Ideas
 
@@ -30,5 +18,19 @@
 ## Completed Tests
 
 - [x] returns every word when no constraints are configured
+- [x] keeps a word that matches a correct letter at its configured position
+- [x] excludes a word that does not match a correct letter at its configured position
+- [x] keeps a word that contains a present letter
+- [x] excludes a word that does not contain a present letter
+- [x] keeps a word that does not contain an absent letter
+- [x] excludes a word that contains an absent letter
+- [x] returns no words when absent letters eliminate every candidate
+- [x] allows a present letter at any position when it has no position rule
+- [x] allows a present letter outside all of its forbidden positions
+- [x] excludes a present letter from each of its forbidden positions
+- [x] returns no words when correct and present constraints conflict
+- [x] returns no words when the same letter is both correct and absent
+- [x] filters words with fewer than five letters
+- [x] filters words with more than five letters
 - [x] combines correct, present, and absent constraints
 - [x] excludes a word when a present letter appears at a forbidden position
