@@ -89,6 +89,16 @@ export class WordleState {
         this.update();
     }
 
+    public changeLanguage(wordList: string[]): void {
+        this.wordList = wordList;
+        this.correctLetters = Array(this.letterCount).fill("");
+        this.presentLetters = Array(this.letterCount).fill("");
+        this.presentRules = {};
+        this.absentLetters = "";
+        this.onPresentLetterUpdate(this);
+        this.update();
+    }
+
     public loadWordList(uri: string): void {
         // Wortliste laden
         fetch(uri)

@@ -6,7 +6,7 @@
 
 ## Pending Tests
 
-- [ ] resets all letter constraints when the language changes
+- None.
 
 ## Refactoring / Design Ideas
 
@@ -30,3 +30,4 @@
 - [x] falls back to English for an unsupported browser locale
 - [x] stores the selected language in local storage
 - [x] restores the stored language on reload
+- [x] resets all letter constraints when the language changes
