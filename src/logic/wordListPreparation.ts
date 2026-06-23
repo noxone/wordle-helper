@@ -1,5 +1,4 @@
 export { supportedLanguages } from "./languages";
-export type { SupportedLanguage } from "./languages";
 
 export function prepareWordList(words: string[], wordLength: number): string[] {
     return words

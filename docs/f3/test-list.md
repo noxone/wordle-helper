@@ -6,12 +6,6 @@
 
 ## Pending Tests
 
-- [ ] loads the English word list by default
-- [ ] loads the selected language word list when the language changes
-- [ ] detects a supported browser locale on first load
-- [ ] falls back to English for an unsupported browser locale
-- [ ] stores the selected language in local storage
-- [ ] restores the stored language on reload
 - [ ] resets all letter constraints when the language changes
 
 ## Refactoring / Design Ideas
@@ -30,3 +24,9 @@
 - [x] rejects words containing digits, punctuation, whitespace, or symbols
 - [x] writes generated word lists to `public/{lang}/{length}.txt`
 - [x] exposes all supported languages with their locale codes and labels
+- [x] loads the English word list by default
+- [x] loads the selected language word list when the language changes
+- [x] detects a supported browser locale on first load
+- [x] falls back to English for an unsupported browser locale
+- [x] stores the selected language in local storage
+- [x] restores the stored language on reload

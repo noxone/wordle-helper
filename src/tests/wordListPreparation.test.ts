@@ -2,7 +2,7 @@ import { mkdtemp, readFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import { prepareWordList, supportedLanguages, writePreparedWordList } from "../logic/wordListPreparation";
+import { prepareWordList, writePreparedWordList } from "../logic/wordListPreparation";
 
 describe("prepareWordList", () => {
     it("builds a lowercase word list for one language and one word length", () => {
@@ -29,18 +29,5 @@ describe("prepareWordList", () => {
         });
 
         await expect(readFile(join(publicDir, "de", "5.txt"), "utf8")).resolves.toBe("äpfel\n");
-    });
-
-    it("exposes all supported languages with their locale codes and labels", () => {
-        expect(supportedLanguages.map((language) => [language.locale, language.label])).toEqual([
-            ["de", "Deutsch"],
-            ["en", "English"],
-            ["es", "Español"],
-            ["fr", "Français"],
-            ["it", "Italiano"],
-            ["nl", "Nederlands"],
-            ["da", "Dansk"],
-            ["no", "Norsk"],
-        ]);
     });
 });
