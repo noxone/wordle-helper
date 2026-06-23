@@ -1,18 +1,5 @@
-export interface SupportedLanguage {
-    locale: string;
-    label: string;
-}
-
-export const supportedLanguages: SupportedLanguage[] = [
-    { locale: "de", label: "Deutsch" },
-    { locale: "en", label: "English" },
-    { locale: "es", label: "Español" },
-    { locale: "fr", label: "Français" },
-    { locale: "it", label: "Italiano" },
-    { locale: "nl", label: "Nederlands" },
-    { locale: "da", label: "Dansk" },
-    { locale: "no", label: "Norsk" },
-];
+export { supportedLanguages } from "./languages";
+export type { SupportedLanguage } from "./languages";
 
 export function prepareWordList(words: string[], wordLength: number): string[] {
     return words
@@ -20,7 +7,6 @@ export function prepareWordList(words: string[], wordLength: number): string[] {
         .filter((word) => /^\p{L}+$/u.test(word))
         .filter((word) => Array.from(word).length === wordLength);
 }
-
 
 export interface WritePreparedWordListOptions {
     language: string;
