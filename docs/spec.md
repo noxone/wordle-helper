@@ -107,7 +107,11 @@ Add a language selector to the UI (dropdown or button group). Available language
 
 **Word list preparation (build-time script):**
 
-A script `scripts/build-wordlists.ts` filters each source file by word length and writes the output to `public/{lang}/{length}.txt` (lowercase, one word per line, only ASCII-range letters).
+A script `scripts/build-wordlists.ts` filters each source file by word length and writes the output to `public/{lang}/{length}.txt` (lowercase, one word per line, letters only).
+
+Word validation must be Unicode-aware. It must accept letters with accents, umlauts, cedillas, tildes, and similar diacritics, for example `ä`, `ö`, `ü`, `é`, `è`, `ç`, `ñ`, and `å`. It must not reduce them to ASCII equivalents during word-list preparation; for example `ä` must remain `ä`, not become `a`.
+
+The script should reject entries containing digits, punctuation, whitespace inside the word, or symbols. Word length must be counted by user-visible characters, not raw UTF-16 code units, so precomposed and combining-accent forms are handled consistently.
 
 Example output paths: `public/de/5.txt`, `public/fr/6.txt`, etc.
 
