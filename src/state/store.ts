@@ -19,10 +19,8 @@ export class WordleState {
         this.letterCount = letterCount;
         this.onUpdate = onUpdate;
         this.onPresentLetterUpdate = onPresentLetterUpdate;
-        for (let i = 0; i < letterCount; i++) {
-            this.correctLetters.push("")
-            this.presentLetters.push("")
-        }
+        this.correctLetters = this.emptyLetters();
+        this.presentLetters = this.emptyLetters();
     }
 
     public isLetterValidForCorrect(letter: string): boolean {
@@ -31,6 +29,10 @@ export class WordleState {
 
     public isLetterValidForPresent(letter: string): boolean {
         return !this.absentLetters.includes(letter) && !this.presentLetters.includes(letter)
+    }
+
+    private emptyLetters(): string[] {
+        return Array(this.letterCount).fill("");
     }
 
     private update() {
@@ -91,8 +93,8 @@ export class WordleState {
 
     public changeLanguage(wordList: string[]): void {
         this.wordList = wordList;
-        this.correctLetters = Array(this.letterCount).fill("");
-        this.presentLetters = Array(this.letterCount).fill("");
+        this.correctLetters = this.emptyLetters();
+        this.presentLetters = this.emptyLetters();
         this.presentRules = {};
         this.absentLetters = "";
         this.onPresentLetterUpdate(this);

@@ -15,15 +15,22 @@ export const supportedLanguages: SupportedLanguage[] = [
 ];
 
 
+const LANGUAGE_STORAGE_KEY = "wordle-helper.language";
+
+function parseWordListText(text: string): string[] {
+    return text
+        .split("\n")
+        .map((word) => word.trim())
+        .filter((word) => word !== "");
+}
+
+
 export type FetchWordListText = (path: string) => Promise<string>;
 
 export async function loadWordList(fetchText: FetchWordListText, locale = "en"): Promise<string[]> {
     const text = await fetchText(`/${locale}/5.txt`);
 
-    return text
-        .split("\n")
-        .map((word) => word.trim())
-        .filter((word) => word !== "");
+    return parseWordListText(text);
 }
 
 
@@ -40,7 +47,7 @@ export interface LanguageStorage {
 }
 
 export function storeSelectedLocale(storage: LanguageStorage, locale: string): void {
-    storage.setItem("wordle-helper.language", locale);
+    storage.setItem(LANGUAGE_STORAGE_KEY, locale);
 }
 
 
@@ -49,5 +56,5 @@ export interface ReadLanguageStorage {
 }
 
 export function restoreSelectedLocale(storage: ReadLanguageStorage): string | null {
-    return storage.getItem("wordle-helper.language");
+    return storage.getItem(LANGUAGE_STORAGE_KEY);
 }
