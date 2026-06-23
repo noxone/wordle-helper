@@ -17,6 +17,12 @@ export class LetterRow {
         setTimeout(() => { item.classList.remove(highlightClass) }, 1000)
     }
 
+    public clear() {
+        this.inputs.forEach((input) => {
+            input.value = "";
+        });
+    }
+
     private getItem(index: number | string) {
         if (typeof index === 'number') {
             return this.inputs[index]

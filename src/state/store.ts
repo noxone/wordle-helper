@@ -86,11 +86,6 @@ export class WordleState {
         this.update()
     }
 
-    private setWordList(wordList: string[]) {
-        this.wordList = wordList;
-        this.update();
-    }
-
     public changeLanguage(wordList: string[]): void {
         this.wordList = wordList;
         this.correctLetters = this.emptyLetters();
@@ -100,18 +95,4 @@ export class WordleState {
         this.onPresentLetterUpdate(this);
         this.update();
     }
-
-    public loadWordList(uri: string): void {
-        // Wortliste laden
-        fetch(uri)
-            .then((r) => r.text())
-            .then((text) => {
-                    const wordList = text
-                        .split("\n")
-                        .map((word) => word.trim().toUpperCase())
-                        .filter((word) => word.length === this.letterCount);
-                    this.setWordList(wordList);
-                });
-    }
-
 }

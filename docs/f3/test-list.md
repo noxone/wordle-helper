@@ -15,6 +15,8 @@
 - Normalize Unicode consistently before validating and measuring word length.
 - Keep language metadata in one place so UI options, auto-detection, and loading paths cannot drift.
 - Mock `fetch`, `navigator.language`, and `localStorage` in application-level tests.
+- Keep browser wiring thin by using small component functions for selector rendering and reset behavior.
+- Prefer testing UI component behavior separately from full `main.ts` startup wiring.
 
 ## Completed Tests
 
@@ -31,3 +33,11 @@
 - [x] stores the selected language in local storage
 - [x] restores the stored language on reload
 - [x] resets all letter constraints when the language changes
+- [x] renders a language selector with all supported languages
+- [x] selects the restored language on startup
+- [x] selects the detected browser language when no stored language exists
+- [x] loads the selected word list on startup
+- [x] stores the selected language when the selector changes
+- [x] loads the selected word list when the selector changes
+- [x] resets the state constraints when the selector changes
+- [x] clears visible constraint inputs when the selector changes
