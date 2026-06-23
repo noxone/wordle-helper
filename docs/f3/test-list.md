@@ -2,15 +2,10 @@
 
 ## Current Focus
 
-- [ ] builds a lowercase word list for one language and one word length
+- None.
 
 ## Pending Tests
 
-- [ ] excludes words that do not match the requested word length
-- [ ] keeps Unicode letters with accents and umlauts unchanged
-- [ ] rejects words containing digits, punctuation, whitespace, or symbols
-- [ ] writes generated word lists to `public/{lang}/{length}.txt`
-- [ ] exposes all supported languages with their locale codes and labels
 - [ ] loads the English word list by default
 - [ ] loads the selected language word list when the language changes
 - [ ] detects a supported browser locale on first load
@@ -29,4 +24,9 @@
 
 ## Completed Tests
 
-- None.
+- [x] builds a lowercase word list for one language and one word length
+- [x] excludes words that do not match the requested word length
+- [x] keeps Unicode letters with accents and umlauts unchanged
+- [x] rejects words containing digits, punctuation, whitespace, or symbols
+- [x] writes generated word lists to `public/{lang}/{length}.txt`
+- [x] exposes all supported languages with their locale codes and labels
