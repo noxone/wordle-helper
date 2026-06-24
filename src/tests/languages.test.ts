@@ -1,9 +1,12 @@
 import { describe, expect, it, vi } from "vitest";
 import {
     detectSupportedLocale,
+    getAvailableWordLengths,
     loadWordList,
     restoreSelectedLocale,
+    resolveSelectedWordLength,
     storeSelectedLocale,
+    storeSelectedWordLength,
     supportedLanguages,
 } from "../logic/languages";
 
@@ -22,6 +25,14 @@ describe("supportedLanguages", () => {
     });
 });
 
+describe("getAvailableWordLengths", () => {
+    it("exposes available word lengths per supported language", () => {
+        expect(getAvailableWordLengths("de")).toEqual([4, 5, 6, 7]);
+        expect(getAvailableWordLengths("en")).toEqual([4, 5, 6, 7]);
+        expect(getAvailableWordLengths("da")).toEqual([4, 5, 6, 7]);
+    });
+});
+
 describe("loadWordList", () => {
     it("loads the English word list by default", async () => {
         const fetchText = vi.fn().mockResolvedValue("crane\nhouse\n");
@@ -37,6 +48,14 @@ describe("loadWordList", () => {
         await expect(loadWordList(fetchText, "de")).resolves.toEqual(["äpfel", "kräne"]);
         expect(fetchText).toHaveBeenCalledWith("/de/5.txt");
     });
+
+
+    it("loads the selected length word list for the current language", async () => {
+        const fetchText = vi.fn().mockResolvedValue("häuser\nkräuter\n");
+
+        await expect(loadWordList(fetchText, "de", 6)).resolves.toEqual(["häuser", "kräuter"]);
+        expect(fetchText).toHaveBeenCalledWith("/de/6.txt");
+    });
 });
 
 describe("detectSupportedLocale", () => {
@@ -50,6 +69,16 @@ describe("detectSupportedLocale", () => {
     });
 });
 
+describe("resolveSelectedWordLength", () => {
+    it("loads the default available length when no stored length exists", () => {
+        const storage = {
+            getItem: vi.fn().mockReturnValue(null),
+        };
+
+        expect(resolveSelectedWordLength(storage, "de")).toBe(5);
+    });
+});
+
 describe("storeSelectedLocale", () => {
     it("stores the selected language in local storage", () => {
         const storage = {
@@ -59,6 +88,18 @@ describe("storeSelectedLocale", () => {
         storeSelectedLocale(storage, "de");
 
         expect(storage.setItem).toHaveBeenCalledWith("wordle-helper.language", "de");
+    });
+});
+
+describe("storeSelectedWordLength", () => {
+    it("stores the selected word length in local storage", () => {
+        const storage = {
+            setItem: vi.fn(),
+        };
+
+        storeSelectedWordLength(storage, 6);
+
+        expect(storage.setItem).toHaveBeenCalledWith("wordle-helper.wordLength", "6");
     });
 });
 

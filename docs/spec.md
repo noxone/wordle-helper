@@ -156,12 +156,12 @@ Word list URL pattern: `/public/{lang}/{length}.txt`
 | Lang | 4 | 5 | 6 | 7 |
 |---|---|---|---|---|
 | de | ✓ | ✓ | ✓ | ✓ |
-| en | — | ✓ | — | — |
+| en | ✓ | ✓ | ✓ | ✓ |
 | es | ✓ | ✓ | ✓ | ✓ |
 | fr | ✓ | ✓ | ✓ | ✓ |
 | it | ✓ | ✓ | ✓ | ✓ |
 | nl | ✓ | ✓ | ✓ | ✓ |
-| da | ✓ | ✓ | ✓ | — |
+| da | ✓ | ✓ | ✓ | ✓ |
 | no | ✓ | ✓ | ✓ | ✓ |
 
 The UI only shows length buttons for lengths that exist for the current language.

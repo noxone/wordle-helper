@@ -14,7 +14,7 @@ export interface BuildWordListsOptions {
     wordLengths?: readonly number[];
 }
 
-export const defaultWordLengths: readonly number[] = [5];
+export const defaultWordLengths: readonly number[] = [4, 5, 6, 7];
 
 export const wordListSources: readonly WordListSource[] = [
     { language: "de", path: "dgwicks.net/deutsch.txt" },

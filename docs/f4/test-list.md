@@ -2,14 +2,10 @@
 
 ## Current Focus
 
-- [ ] exposes available word lengths per supported language
+- [ ] restores the stored word length on reload when it is available for the current language
 
 ## Pending Tests
 
-- [ ] loads the selected length word list for the current language
-- [ ] loads the default available length when no stored length exists
-- [ ] stores the selected word length in local storage
-- [ ] restores the stored word length on reload when it is available for the current language
 - [ ] falls back to an available length when the stored length is not available for the current language
 - [ ] resets all letter constraints when the word length changes
 - [ ] updates the state word length when the word length changes
@@ -33,4 +29,7 @@
 
 ## Completed Tests
 
-- None.
+- [x] stores the selected word length in local storage
+- [x] loads the default available length when no stored length exists
+- [x] loads the selected length word list for the current language
+- [x] exposes available word lengths per supported language
