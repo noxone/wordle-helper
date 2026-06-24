@@ -25,6 +25,7 @@
 - [x] keeps Unicode letters with accents and umlauts unchanged
 - [x] rejects words containing digits, punctuation, whitespace, or symbols
 - [x] writes generated word lists to `public/{lang}/{length}.txt`
+- [x] builds configured source word lists as part of the npm build process
 - [x] exposes all supported languages with their locale codes and labels
 - [x] loads the English word list by default
 - [x] loads the selected language word list when the language changes

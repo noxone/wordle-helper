@@ -1,5 +1,3 @@
-export { supportedLanguages } from "./languages";
-
 export function prepareWordList(words: string[], wordLength: number): string[] {
     return words
         .map((word) => word.normalize("NFC").toLowerCase())

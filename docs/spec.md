@@ -117,6 +117,8 @@ Example output paths: `public/de/5.txt`, `public/fr/6.txt`, etc.
 
 This script runs once manually or as part of the build. The generated files are committed to `public/` (they are served assets, not build artefacts).
 
+Build integration: `npm run build:wordlists` runs `scripts/build-wordlists.ts`, and `npm run build` runs it automatically through the `prebuild` hook before TypeScript and Vite build the app.
+
 **Auto-detection:**
 
 On first load, read `navigator.language` (e.g. `"de-DE"` → `"de"`). If the detected language is in the supported list, use it. Otherwise fall back to `"en"`.

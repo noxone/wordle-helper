@@ -8,6 +8,8 @@
   },
   "scripts": {
     "dev": "vite",
+    "build:wordlists": "node --experimental-strip-types scripts/build-wordlists.ts",
+    "prebuild": "npm run build:wordlists",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "test": "vitest",
