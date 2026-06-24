@@ -90,6 +90,8 @@ Vitest V8 coverage is configured for `src/logic/` with an enforced 80% minimum f
 
 ### F-3 · Language Selection
 
+**Status:** Complete — verified June 24, 2026.
+
 **What to do:**
 
 Add a language selector to the UI (dropdown or button group). Available languages and their browser locale codes:
