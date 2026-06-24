@@ -173,6 +173,7 @@ The UI only shows length buttons for lengths that exist for the current language
 - All input rows resize when length changes
 - Changing length resets all constraints
 - Filter logic works correctly for all lengths
+- Word lists are generated for word counts for each language in build phase
 
 ---
 

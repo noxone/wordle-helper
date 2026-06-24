@@ -7,6 +7,7 @@
 ## Pending Tests
 
 - [ ] falls back to an available length when the stored length is not available for the current language
+- [ ] generates word lists for all configured word lengths for each supported language during the build phase
 - [ ] resets all letter constraints when the word length changes
 - [ ] updates the state word length when the word length changes
 - [ ] renders a word-length selector with only lengths available for the selected language
