@@ -77,6 +77,24 @@ describe("resolveSelectedWordLength", () => {
 
         expect(resolveSelectedWordLength(storage, "de")).toBe(5);
     });
+
+
+    it("restores the stored word length on reload when it is available for the current language", () => {
+        const storage = {
+            getItem: vi.fn().mockReturnValue("6"),
+        };
+
+        expect(resolveSelectedWordLength(storage, "de")).toBe(6);
+    });
+
+
+    it("falls back to an available length when the stored length is not available for the current language", () => {
+        const storage = {
+            getItem: vi.fn().mockReturnValue("9"),
+        };
+
+        expect(resolveSelectedWordLength(storage, "de")).toBe(5);
+    });
 });
 
 describe("storeSelectedLocale", () => {

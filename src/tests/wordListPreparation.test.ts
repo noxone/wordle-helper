@@ -1,8 +1,8 @@
-import { mkdtemp, readFile } from "node:fs/promises";
+import { mkdir, mkdtemp, readFile, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
 import { describe, expect, it } from "vitest";
-import { buildWordLists } from "../logic/wordListBuild";
+import { buildWordLists, defaultWordLengths, wordListSources } from "../logic/wordListBuild";
 import { prepareWordList, writePreparedWordList } from "../logic/wordListPreparation";
 
 describe("prepareWordList", () => {
@@ -51,5 +51,27 @@ describe("prepareWordList", () => {
         });
 
         await expect(readFile(join(publicDir, "en", "5.txt"), "utf8")).resolves.toBe("CRANE\nHOUSE\n");
+    });
+
+
+    it("generates word lists for all configured word lengths for each supported language during the build phase", async () => {
+        const dataDir = await mkdtemp(join(tmpdir(), "wordle-helper-data-"));
+        const publicDir = await mkdtemp(join(tmpdir(), "wordle-helper-public-"));
+        const sourceWords = "ABLE\nCRANE\nCASTLE\nCANDLES\n";
+
+        for (const source of wordListSources) {
+            const sourcePath = join(dataDir, source.path);
+            await mkdir(dirname(sourcePath), { recursive: true });
+            await writeFile(sourcePath, sourceWords, "utf8");
+        }
+
+        await buildWordLists({ dataDir, publicDir });
+
+        for (const source of wordListSources) {
+            for (const wordLength of defaultWordLengths) {
+                await expect(readFile(join(publicDir, source.language, `${wordLength}.txt`), "utf8"))
+                    .resolves.toContain("\n");
+            }
+        }
     });
 });
