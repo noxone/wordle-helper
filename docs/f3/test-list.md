@@ -20,7 +20,7 @@
 
 ## Completed Tests
 
-- [x] builds a lowercase word list for one language and one word length
+- [x] builds an uppercase word list for one language and one word length
 - [x] excludes words that do not match the requested word length
 - [x] keeps Unicode letters with accents and umlauts unchanged
 - [x] rejects words containing digits, punctuation, whitespace, or symbols

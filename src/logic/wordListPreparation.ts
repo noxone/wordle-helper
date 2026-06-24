@@ -1,6 +1,6 @@
 export function prepareWordList(words: string[], wordLength: number): string[] {
     return words
-        .map((word) => word.normalize("NFC").toLowerCase())
+        .map((word) => word.normalize("NFC").toUpperCase())
         .filter((word) => /^\p{L}+$/u.test(word))
         .filter((word) => Array.from(word).length === wordLength);
 }

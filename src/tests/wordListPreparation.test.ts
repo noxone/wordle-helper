@@ -6,17 +6,17 @@ import { buildWordLists } from "../logic/wordListBuild";
 import { prepareWordList, writePreparedWordList } from "../logic/wordListPreparation";
 
 describe("prepareWordList", () => {
-    it("builds a lowercase word list for one language and one word length", () => {
-        expect(prepareWordList(["CRANE", "House", "DOG"], 5)).toEqual(["crane", "house"]);
+    it("builds an uppercase word list for one language and one word length", () => {
+        expect(prepareWordList(["CRANE", "House", "DOG"], 5)).toEqual(["CRANE", "HOUSE"]);
     });
 
     it("keeps Unicode letters with accents and umlauts unchanged", () => {
-        expect(prepareWordList(["CAFE\u0301", "ÄPFEL", "PLAIN"], 4)).toEqual(["café"]);
-        expect(prepareWordList(["CAFE\u0301", "ÄPFEL", "PLAIN"], 5)).toEqual(["äpfel", "plain"]);
+        expect(prepareWordList(["CAFE\u0301", "ÄPFEL", "PLAIN"], 4)).toEqual(["CAFÉ"]);
+        expect(prepareWordList(["CAFE\u0301", "ÄPFEL", "PLAIN"], 5)).toEqual(["ÄPFEL", "PLAIN"]);
     });
 
     it("rejects words containing digits, punctuation, whitespace, or symbols", () => {
-        expect(prepareWordList(["CRANE", "ab12e", "co-op", "ab cd", "$mile"], 5)).toEqual(["crane"]);
+        expect(prepareWordList(["CRANE", "ab12e", "co-op", "ab cd", "$mile"], 5)).toEqual(["CRANE"]);
     });
 
     it("writes generated word lists to public language and length paths", async () => {
@@ -29,7 +29,7 @@ describe("prepareWordList", () => {
             publicDir,
         });
 
-        await expect(readFile(join(publicDir, "de", "5.txt"), "utf8")).resolves.toBe("äpfel\n");
+        await expect(readFile(join(publicDir, "de", "5.txt"), "utf8")).resolves.toBe("ÄPFEL\n");
     });
 
     it("builds configured word lists from source files into the public directory", async () => {
@@ -50,6 +50,6 @@ describe("prepareWordList", () => {
             wordLengths: [5],
         });
 
-        await expect(readFile(join(publicDir, "en", "5.txt"), "utf8")).resolves.toBe("crane\nhouse\n");
+        await expect(readFile(join(publicDir, "en", "5.txt"), "utf8")).resolves.toBe("CRANE\nHOUSE\n");
     });
 });
