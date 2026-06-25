@@ -5,7 +5,13 @@ export default defineConfig({
         environment: "node",
         coverage: {
             provider: "v8",
-            include: ["src/logic/**/*.ts"],
+            include: [
+                "src/*.ts",
+                "src/browser/**/*.ts",
+                "src/components/**/*.ts",
+                "src/logic/**/*.ts",
+                "src/state/**/*.ts",
+            ],
             reporter: ["text", "html"],
             thresholds: {
                 lines: 80,

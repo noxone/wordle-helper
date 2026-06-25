@@ -181,6 +181,8 @@ The UI only shows length buttons for lengths that exist for the current language
 
 ### F-5 · Application Test Coverage ≥ 80%
 
+**Status:** Complete — verified June 25, 2026.
+
 **What to do:**
 
 Extend the test suite beyond the pure filter logic to cover application state, DOM components, and application wiring:
