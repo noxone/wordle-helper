@@ -2,7 +2,7 @@ import { filterWords } from "../logic/filter";
 import type { FilterCriteria, PresentRules } from "../logic/filter";
 
 export class WordleState {
-    readonly letterCount: number;
+    public letterCount: number;
     private wordList: string[] = [];
     private correctLetters: string[] = []
     private presentLetters: string[] = []
@@ -44,6 +44,14 @@ export class WordleState {
             wordList: this.wordList,
         };
         this.onUpdate(filterWords(criteria));
+    }
+
+    private resetConstraints(): void {
+        this.correctLetters = this.emptyLetters();
+        this.presentLetters = this.emptyLetters();
+        this.presentRules = {};
+        this.absentLetters = "";
+        this.onPresentLetterUpdate(this);
     }
 
     public setCorrectLetters(letters: string[]) {
@@ -88,11 +96,14 @@ export class WordleState {
 
     public changeLanguage(wordList: string[]): void {
         this.wordList = wordList;
-        this.correctLetters = this.emptyLetters();
-        this.presentLetters = this.emptyLetters();
-        this.presentRules = {};
-        this.absentLetters = "";
-        this.onPresentLetterUpdate(this);
+        this.resetConstraints();
+        this.update();
+    }
+
+    public changeWordLength(letterCount: number, wordList: string[]): void {
+        this.letterCount = letterCount;
+        this.wordList = wordList;
+        this.resetConstraints();
         this.update();
     }
 }

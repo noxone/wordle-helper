@@ -140,6 +140,8 @@ Store the selected language in `localStorage` so the choice survives page reload
 
 ### F-4 · Variable Word Length
 
+**Status:** Complete — verified June 25, 2026.
+
 **What to do:**
 
 Add a word-length selector to the UI (e.g. buttons 4 / 5 / 6 / 7). The available lengths depend on what word lists exist for the current language.

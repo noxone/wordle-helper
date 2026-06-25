@@ -1,4 +1,5 @@
 import type { SupportedLanguage } from "../logic/languages";
+import { populateSelectOptions } from "./SelectOptions";
 
 export function createLanguageSelector(
     select: HTMLSelectElement,
@@ -6,17 +7,13 @@ export function createLanguageSelector(
     selectedLocale: string,
     onChange: (locale: string) => void,
 ): void {
-    select.innerHTML = "";
+    populateSelectOptions(
+        select,
+        languages.map((language) => ({ value: language.locale, label: language.label })),
+        selectedLocale,
+    );
 
-    languages.forEach((language) => {
-        const option = document.createElement("option");
-        option.value = language.locale;
-        option.textContent = language.label;
-        select.appendChild(option);
-    });
-
-    select.value = selectedLocale;
-    select.addEventListener("change", () => {
+    select.onchange = () => {
         onChange(select.value);
-    });
+    };
 }

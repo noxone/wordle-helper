@@ -14,6 +14,7 @@ const resultsEl = document.getElementById("results")!;
 const countEl = document.getElementById("count")!;
 const presentConfig = document.getElementById("present-config")!;
 const languageSelect = document.getElementById("language") as HTMLSelectElement;
+const wordLengthSelect = document.getElementById("word-length") as HTMLSelectElement;
 
 const possibleWordsList = new PossibleWords(resultsEl, countEl);
 
@@ -28,27 +29,37 @@ const wordleState = new WordleState(
     }
 );
 
-const correctLetters = createLetterRow(
-    correctRow,
-    MAX_CHARACTERS,
-    ALLOWED_CHARACTERS_REGEX,
-    true,
-    'bg-green-300',
-    'focus:bg-green-500',
-    (letter) => { return wordleState.isLetterValidForCorrect(letter) },
-    (letters) => { wordleState.setCorrectLetters(letters); }
-);
+let correctLetters!: ReturnType<typeof createLetterRow>;
+let presentLetters!: ReturnType<typeof createLetterRow>;
 
-const presentLetters = createLetterRow(
-    presentRow,
-    MAX_CHARACTERS,
-    ALLOWED_CHARACTERS_REGEX,
-    false,
-    'bg-yellow-200',
-    'focus:bg-yellow-400',
-    (letter) => { return wordleState.isLetterValidForPresent(letter) },
-    (letters) => { wordleState.setPresentLetters(letters) }
-);
+function renderLetterInputs(wordLength: number): void {
+    correctRow.innerHTML = "";
+    presentRow.innerHTML = "";
+
+    correctLetters = createLetterRow(
+        correctRow,
+        wordLength,
+        ALLOWED_CHARACTERS_REGEX,
+        true,
+        'bg-green-300',
+        'focus:bg-green-500',
+        (letter) => { return wordleState.isLetterValidForCorrect(letter) },
+        (letters) => { wordleState.setCorrectLetters(letters); }
+    );
+
+    presentLetters = createLetterRow(
+        presentRow,
+        wordLength,
+        ALLOWED_CHARACTERS_REGEX,
+        false,
+        'bg-yellow-200',
+        'focus:bg-yellow-400',
+        (letter) => { return wordleState.isLetterValidForPresent(letter) },
+        (letters) => { wordleState.setPresentLetters(letters) }
+    );
+}
+
+renderLetterInputs(MAX_CHARACTERS);
 
 createAbsentLetters(
     absentInput,
@@ -59,6 +70,7 @@ createAbsentLetters(
 
 await initializeLanguageSelection({
     select: languageSelect,
+    lengthSelect: wordLengthSelect,
     storage: localStorage,
     browserLocale: navigator.language,
     fetchText: async (path) => {
@@ -72,6 +84,7 @@ await initializeLanguageSelection({
         absentInput.value = "";
         presentConfig.innerHTML = "";
     },
+    renderLetterInputs,
 });
 
 correctLetters.focus(0)

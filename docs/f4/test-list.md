@@ -2,20 +2,11 @@
 
 ## Current Focus
 
-- [ ] resets all letter constraints when the word length changes
+- None.
 
 ## Pending Tests
 
-- [ ] updates the state word length when the word length changes
-- [ ] renders a word-length selector with only lengths available for the selected language
-- [ ] selects the restored word length on startup
-- [ ] loads the selected word list on startup
-- [ ] stores the selected word length when the selector changes
-- [ ] loads the selected word list when the selector changes
-- [ ] resets the state constraints when the selector changes
-- [ ] re-renders correct-letter inputs to match the selected word length
-- [ ] re-renders present-letter inputs to match the selected word length
-- [ ] clears visible constraint inputs when the selector changes
+- None.
 
 ## Refactoring / Design Ideas
 
@@ -27,6 +18,17 @@
 
 ## Completed Tests
 
+- [x] clears visible constraint inputs when the selector changes
+- [x] re-renders present-letter inputs to match the selected word length
+- [x] re-renders correct-letter inputs to match the selected word length
+- [x] resets the state constraints when the selector changes
+- [x] loads the selected word list when the selector changes
+- [x] stores the selected word length when the selector changes
+- [x] loads the selected word list on startup
+- [x] selects the restored word length on startup
+- [x] renders a word-length selector with only lengths available for the selected language
+- [x] updates the state word length when the word length changes
+- [x] resets all letter constraints when the word length changes
 - [x] generates word lists for all configured word lengths for each supported language during the build phase
 - [x] falls back to an available length when the stored length is not available for the current language
 - [x] restores the stored word length on reload when it is available for the current language
