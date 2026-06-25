@@ -250,6 +250,8 @@ Set `base` in `vite.config.ts` (or `vite.config.js`, create if missing) to the G
 
 ### F-8 · Repository Cleanup
 
+**Status:** Complete — verified June 25, 2026.
+
 - Remove `dist/` from git tracking (`git rm -r --cached dist/`) — it is already in `.gitignore`
 - Verify `.gitignore` covers `dist/`, `node_modules/`, and generated coverage reports
 
