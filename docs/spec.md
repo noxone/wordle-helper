@@ -228,6 +228,8 @@ When ≤10 match, show:
 
 ### F-7 · GitHub Actions CI/CD
 
+**Status:** Complete — verified June 25, 2026.
+
 **What to do:**
 
 Create `.github/workflows/ci.yml`:
@@ -241,7 +243,7 @@ Create `.github/workflows/deploy.yml`:
 
 **Vite base URL:**
 
-Set `base` in `vite.config.ts` (or `vite.config.js`, create if missing) to the GitHub Pages subdirectory path, e.g. `/WordleHelper/`.
+No custom Vite `base` is required when publishing directly at `https://wordle.olafneumann.org/`.
 
 **Acceptance criteria:**
 - Every push to `main` runs tests automatically

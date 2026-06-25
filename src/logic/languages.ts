@@ -56,7 +56,9 @@ function parseWordListText(text: string): string[] {
 export type FetchWordListText = (path: string) => Promise<string>;
 
 export async function loadWordList(fetchText: FetchWordListText, locale = "en", length = 5): Promise<string[]> {
-    const text = await fetchText(`/${locale}/${length}.txt`);
+    const baseUrl = import.meta.env.BASE_URL;
+    const wordListUrl = `${baseUrl}${locale}/${length}.txt`;
+    const text = await fetchText(wordListUrl);
 
     return parseWordListText(text);
 }
