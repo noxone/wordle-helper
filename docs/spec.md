@@ -261,6 +261,34 @@ No custom Vite `base` is required when publishing directly at `https://wordle.ol
 
 ---
 
+### F-i18n · UI Internationalization
+
+**Status:** Specified.
+
+**Spec:** `docs/F-i18n/spec.md`
+
+**What to do:**
+
+Internationalize the user interface while keeping dictionary language and interface language separate:
+
+- `wordLocale` controls the loaded word list and available word lengths
+- `uiLocale` controls labels, headings, help text, placeholders, document title, and accessibility labels
+
+Initial UI languages are German and English. The first implementation uses browser-detected UI language only, with no visible UI language selector. Unsupported browser UI locales fall back to English.
+
+**Acceptance criteria:**
+- All visible static UI copy can be rendered in German and English
+- `wordLocale` and `uiLocale` have separate persistence and behavior
+- Browser UI locale detection works for supported locales and falls back to English otherwise
+- Dictionary language labels stay as self-names regardless of UI locale
+- No visible UI language selector is added in the first implementation
+- Changing UI language does not reload word lists or clear constraints
+- Changing word-list language does not change UI language
+- `npm test -- --run` passes
+- `npm run build` passes
+
+---
+
 ## Implementation Order
 
 | # | Feature | Depends on |
@@ -273,6 +301,7 @@ No custom Vite `base` is required when publishing directly at `https://wordle.ol
 | 6 | F-5 Application test coverage ≥80% | F-2, F-4 |
 | 7 | F-6 UX improvements | F-4 |
 | 8 | F-7 CI/CD + GitHub Pages | F-5, F-6 |
+| 9 | F-i18n UI internationalization | F-4 |
 
 ---
 
