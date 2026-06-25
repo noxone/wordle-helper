@@ -219,10 +219,16 @@ When the filtered word list is empty, show a clear message instead of a blank li
 #### F-6c · Result Count Display
 
 Always show the total number of matches. When more than 10 words match, show:
-> *37 Wörter gefunden — die ersten 10 werden angezeigt.*
+> *37 Wörter gefunden.*
 
 When ≤10 match, show:
 > *3 Wörter gefunden.*
+
+#### F-6d · Scrollable Results List
+
+The remaining-words list grows to fit up to 10 words. When 11 or more words match, cap the visible list height at 10 words and allow the user to scroll through all remaining words using the native scrollbar.
+
+Do not add pagination, filtering, grouping, sorting, a "show more" interaction, or a separate overflow indicator.
 
 ---
 
