@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" role="img" aria-labelledby="title desc">
+  <title id="title">Wordle Helper logo</title>
+  <desc id="desc">A premium word tile logo with green and yellow tiles and a checkmark.</desc>
+  <defs>
+    <linearGradient id="bg" x1="48" y1="24" x2="272" y2="296" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#f7fff8"/>
+      <stop offset="0.46" stop-color="#e6f3ea"/>
+      <stop offset="1" stop-color="#dceaf5"/>
+    </linearGradient>
+    <linearGradient id="greenTile" x1="77" y1="62" x2="219" y2="232" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#7bd68c"/>
+      <stop offset="1" stop-color="#2c8f61"/>
+    </linearGradient>
+    <linearGradient id="yellowTile" x1="153" y1="48" x2="250" y2="217" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffe179"/>
+      <stop offset="1" stop-color="#d5a92c"/>
+    </linearGradient>
+    <filter id="shadow" x="30" y="28" width="260" height="270" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#153023" flood-opacity="0.18"/>
+    </filter>
+  </defs>
+  <rect width="320" height="320" rx="72" fill="url(#bg)"/>
+  <g filter="url(#shadow)">
+    <rect x="63" y="73" width="89" height="89" rx="24" fill="url(#greenTile)"/>
+    <rect x="168" y="73" width="89" height="89" rx="24" fill="url(#yellowTile)"/>
+    <rect x="63" y="178" width="89" height="89" rx="24" fill="#ffffff"/>
+    <rect x="168" y="178" width="89" height="89" rx="24" fill="#183126"/>
+  </g>
+  <path d="M92 224l22 23 47-58" fill="none" stroke="#2c8f61" stroke-linecap="round" stroke-linejoin="round" stroke-width="17"/>
+  <path d="M189 225h47" stroke="#ffffff" stroke-linecap="round" stroke-width="16"/>
+  <path d="M107 100v34M91 101l16 34 16-34M195 100v34M195 117h24M219 100v34" fill="none" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="10"/>
+</svg>

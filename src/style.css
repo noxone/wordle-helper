@@ -60,10 +60,6 @@ select {
     padding: clamp(1rem, 3vw, 1.45rem);
 }
 
-.title-group {
-    min-width: 0;
-}
-
 .eyebrow {
     display: block;
     color: #467c61;
@@ -81,7 +77,7 @@ p {
 
 h1 {
     color: #102019;
-    font-size: clamp(2rem, 6vw, 3.7rem);
+    font-size: clamp(1.85rem, 6vw, 3.7rem);
     font-weight: 850;
     line-height: 0.95;
     letter-spacing: 0;
@@ -91,6 +87,25 @@ h2 {
     color: #1c2b23;
     font-size: clamp(1rem, 2.4vw, 1.15rem);
     font-weight: 780;
+}
+
+.brand {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    gap: clamp(0.75rem, 2vw, 1rem);
+}
+
+.brand-logo {
+    width: clamp(3.4rem, 13vw, 4.8rem);
+    height: clamp(3.4rem, 13vw, 4.8rem);
+    flex: 0 0 auto;
+    border-radius: 1.1rem;
+    filter: drop-shadow(0 0.75rem 1.2rem rgba(24, 49, 38, 0.18));
+}
+
+.title-group {
+    min-width: 0;
 }
 
 .toolbar {
