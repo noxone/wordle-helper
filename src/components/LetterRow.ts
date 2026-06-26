@@ -70,6 +70,11 @@ export function createLetterRow(
         input.maxLength = 1;
         input.value = "";
         input.autocomplete = "off"
+        input.autocapitalize = "characters";
+        input.spellcheck = false;
+        input.inputMode = "text";
+        input.setAttribute("autocorrect", "off");
+        input.setAttribute("enterkeyhint", "next");
         input.pattern = allowedCharacters.source
         input.className =
             `w-12 h-12 text-center text-xl border rounded-lg caret-transparent ${color} ${colorFocus} transition-colors duration-500 outline-none`;

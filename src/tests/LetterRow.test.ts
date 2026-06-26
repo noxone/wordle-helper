@@ -26,6 +26,19 @@ describe("createLetterRow", () => {
     });
 
 
+    it("disables mobile typing suggestions for letter inputs", () => {
+        const container = document.createElement("div");
+
+        createLetterRow(container, 1, /^\p{L}$/u, true, "", "", () => true, vi.fn());
+        const input = container.querySelector("input")!;
+
+        expect(input.autocomplete).toBe("off");
+        expect(input.getAttribute("autocorrect")).toBe("off");
+        expect(input.autocapitalize).toBe("characters");
+        expect(input.spellcheck).toBe(false);
+    });
+
+
     it("normalizes umlauts entered from key presses", () => {
         const container = document.createElement("div");
         const onChange = vi.fn();

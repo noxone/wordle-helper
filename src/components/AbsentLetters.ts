@@ -7,7 +7,9 @@ export function createAbsentLetters(
     wordleState: WordleState,
 ) {
     absentInput.pattern = allowedCharacters.source;
-    absentInput.autocomplete = 'off'
+    absentInput.autocomplete = 'off';
+    absentInput.autocapitalize = "characters";
+    absentInput.spellcheck = false;
     absentInput.addEventListener("input", () => {
         const uniqueLetters = new Set(absentInput.value
             .toUpperCase()
