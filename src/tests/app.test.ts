@@ -10,6 +10,7 @@ function renderAppShell(): void {
         <div id="correct-row"></div>
         <div id="present-row"></div>
         <input id="absent" />
+        <button id="reset" type="button">Zurücksetzen</button>
         <div id="present-config"></div>
         <span id="count"></span>
         <ul id="results"></ul>
@@ -51,7 +52,7 @@ describe("initializeApp", () => {
         expect(document.querySelectorAll("#present-row input")).toHaveLength(5);
         expect(document.querySelector<HTMLSelectElement>("#language")?.value).toBe("en");
         expect(document.querySelector<HTMLSelectElement>("#word-length")?.value).toBe("5");
-        expect(document.querySelector("#count")?.textContent).toBe("2");
+        expect(document.querySelector("#count")?.textContent).toBe("2 Wörter gefunden.");
         expect(Array.from(document.querySelectorAll("#results li")).map((li) => li.textContent)).toEqual([
             "CRANE",
             "SLATE",
@@ -65,7 +66,7 @@ describe("initializeApp", () => {
         await initializeTestApp({ fetchText });
 
         expect(fetchText).toHaveBeenCalledWith("/en/5.txt");
-        expect(document.querySelector("#count")?.textContent).toBe("1");
+        expect(document.querySelector("#count")?.textContent).toBe("1 Wort gefunden.");
     });
 
     it("initializes the app with mocked localStorage", async () => {
@@ -107,7 +108,7 @@ describe("initializeApp", () => {
         expect(fetchText).toHaveBeenCalledWith("/de/6.txt");
         expect(document.querySelectorAll("#correct-row input")).toHaveLength(6);
         expect(document.querySelectorAll("#present-row input")).toHaveLength(6);
-        expect(document.querySelector("#count")?.textContent).toBe("2");
+        expect(document.querySelector("#count")?.textContent).toBe("2 Wörter gefunden.");
         expect(Array.from(document.querySelectorAll("#results li")).map((li) => li.textContent)).toEqual([
             "HÄUSER",
             "KRÄUTER",

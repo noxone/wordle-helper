@@ -22,13 +22,14 @@ export async function initializeApp(options: InitializeAppOptions): Promise<void
     const correctRow = getRequiredElement("correct-row");
     const presentRow = getRequiredElement("present-row");
     const absentInput = getRequiredElement<HTMLInputElement>("absent");
-    const resultsEl = getRequiredElement("results");
-    const countEl = getRequiredElement("count");
+    const resetButton = getRequiredElement<HTMLButtonElement>("reset");
+    const resultsListElement = getRequiredElement("results");
+    const countElement = getRequiredElement("count");
     const presentConfig = getRequiredElement("present-config");
     const languageSelect = getRequiredElement<HTMLSelectElement>("language");
     const wordLengthSelect = getRequiredElement<HTMLSelectElement>("word-length");
 
-    const possibleWordsList = new PossibleWords(resultsEl, countEl);
+    const possibleWordsList = new PossibleWords(resultsListElement, countElement);
 
     const wordleState = new WordleState(
         MAX_CHARACTERS,
@@ -43,6 +44,13 @@ export async function initializeApp(options: InitializeAppOptions): Promise<void
 
     let correctLetters!: ReturnType<typeof createLetterRow>;
     let presentLetters!: ReturnType<typeof createLetterRow>;
+
+    function clearConstraintInputs(): void {
+        correctLetters.clear();
+        presentLetters.clear();
+        absentInput.value = "";
+        presentConfig.innerHTML = "";
+    }
 
     function renderLetterInputs(wordLength: number): void {
         correctRow.innerHTML = "";
@@ -80,6 +88,12 @@ export async function initializeApp(options: InitializeAppOptions): Promise<void
         wordleState
     );
 
+    resetButton.addEventListener("click", () => {
+        clearConstraintInputs();
+        wordleState.resetConstraints();
+        correctLetters.focus(0);
+    });
+
     await initializeLanguageSelection({
         select: languageSelect,
         lengthSelect: wordLengthSelect,
@@ -87,12 +101,7 @@ export async function initializeApp(options: InitializeAppOptions): Promise<void
         browserLocale: options.browserLocale,
         fetchText: options.fetchText,
         wordleState,
-        clearConstraintInputs: () => {
-            correctLetters.clear();
-            presentLetters.clear();
-            absentInput.value = "";
-            presentConfig.innerHTML = "";
-        },
+        clearConstraintInputs,
         renderLetterInputs,
     });
 

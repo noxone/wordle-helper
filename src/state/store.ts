@@ -46,12 +46,17 @@ export class WordleState {
         this.onUpdate(filterWords(criteria));
     }
 
-    private resetConstraints(): void {
+    private clearConstraints(): void {
         this.correctLetters = this.emptyLetters();
         this.presentLetters = this.emptyLetters();
         this.presentRules = {};
         this.absentLetters = "";
         this.onPresentLetterUpdate(this);
+    }
+
+    public resetConstraints(): void {
+        this.clearConstraints();
+        this.update();
     }
 
     public setCorrectLetters(letters: string[]) {
@@ -96,14 +101,14 @@ export class WordleState {
 
     public changeLanguage(wordList: string[]): void {
         this.wordList = wordList;
-        this.resetConstraints();
+        this.clearConstraints();
         this.update();
     }
 
     public changeWordLength(letterCount: number, wordList: string[]): void {
         this.letterCount = letterCount;
         this.wordList = wordList;
-        this.resetConstraints();
+        this.clearConstraints();
         this.update();
     }
 }

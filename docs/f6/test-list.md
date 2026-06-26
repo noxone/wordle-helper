@@ -2,22 +2,11 @@
 
 ## Current Focus
 
-- [ ] renders a reset button
+- None.
 
 ## Pending Tests
 
-- [ ] clears correct-letter constraints when the reset button is clicked
-- [ ] clears present-letter constraints when the reset button is clicked
-- [ ] clears absent-letter constraints when the reset button is clicked
-- [ ] keeps the selected language when the reset button is clicked
-- [ ] keeps the selected word length when the reset button is clicked
-- [ ] shows an empty-results message when no words match
-- [ ] hides the empty-results message when words match
-- [ ] shows the result count when one word matches
-- [ ] shows the result count when multiple words match
-- [ ] renders all matching words when more than 10 words match
-- [ ] sizes the results list to fit when 10 or fewer words match
-- [ ] makes the results list scrollable when more than 10 words match
+- None.
 
 ## Refactoring / Design Ideas
 
@@ -29,4 +18,17 @@
 
 ## Completed Tests
 
-- None.
+- [x] makes the results list scrollable when more than 10 words match
+- [x] sizes the results list to fit when 10 or fewer words match
+- [x] focuses the first correct-position input when the reset button is clicked
+- [x] renders all matching words when more than 10 words match
+- [x] shows the result count when multiple words match
+- [x] shows the result count when one word matches
+- [x] hides the empty-results message when words match
+- [x] shows an empty-results message when no words match
+- [x] keeps the selected word length when the reset button is clicked
+- [x] keeps the selected language when the reset button is clicked
+- [x] clears absent-letter constraints when the reset button is clicked
+- [x] clears present-letter constraints when the reset button is clicked
+- [x] clears correct-letter constraints when the reset button is clicked
+- [x] renders a reset button
