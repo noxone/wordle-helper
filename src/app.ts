@@ -1,4 +1,4 @@
-import { ALLOWED_CHARACTERS_REGEX, DISALLOWED_CHARACTERS_REGEX, MAX_CHARACTERS } from "./constants.ts";
+import { ALLOWED_CHARACTERS_REGEX, DISALLOWED_CHARACTERS_REGEX, DEFAULT_WORD_LENGTH } from "./constants.ts";
 import { WordleState } from "./state/store";
 import { createLetterRow } from "./components/LetterRow";
 import { renderPresentConfig } from "./components/PresentLetters.ts";
@@ -32,7 +32,7 @@ export async function initializeApp(options: InitializeAppOptions): Promise<void
     const possibleWordsList = new PossibleWords(resultsListElement, countElement);
 
     const wordleState = new WordleState(
-        MAX_CHARACTERS,
+        DEFAULT_WORD_LENGTH,
         (words) => { possibleWordsList.showPossibleWords(words) },
         (state) => {
             renderPresentConfig(
@@ -79,7 +79,7 @@ export async function initializeApp(options: InitializeAppOptions): Promise<void
         );
     }
 
-    renderLetterInputs(MAX_CHARACTERS);
+    renderLetterInputs(DEFAULT_WORD_LENGTH);
 
     createAbsentLetters(
         absentInput,
