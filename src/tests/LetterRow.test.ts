@@ -26,6 +26,22 @@ describe("createLetterRow", () => {
     });
 
 
+    it("lets browser shortcuts with modifier keys pass through", () => {
+        const container = document.createElement("div");
+        const onChange = vi.fn();
+
+        createLetterRow(container, 1, /^\p{L}$/u, true, "", "", () => true, onChange);
+        const input = container.querySelector("input")!;
+        const event = new KeyboardEvent("keydown", { key: "T", metaKey: true, shiftKey: true, cancelable: true });
+
+        input.dispatchEvent(event);
+
+        expect(input.value).toBe("");
+        expect(event.defaultPrevented).toBe(false);
+        expect(onChange).not.toHaveBeenCalled();
+    });
+
+
     it("disables mobile typing suggestions for letter inputs", () => {
         const container = document.createElement("div");
 

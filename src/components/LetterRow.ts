@@ -106,6 +106,10 @@ export function createLetterRow(
         });
 
         input.addEventListener("keydown", (e) => {
+            if (e.metaKey || e.ctrlKey || e.altKey) {
+                return;
+            }
+
             const key = e.key;
             const upperKey = normalizeLetter(key);
 
