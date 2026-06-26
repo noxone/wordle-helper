@@ -129,6 +129,11 @@ export function createLetterRow(
                 fireOnChange()
             }
 
+            if (key === "Delete") {
+                setValue("")
+                fireOnChange()
+            }
+
             if (isSingleLetterInput(key) && allowedCharacters.test(upperKey) && isLetterValid(upperKey)) {
                 if (allowDuplicates || !doesValueExist(upperKey, i)) {
                     setValue(upperKey)

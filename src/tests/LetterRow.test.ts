@@ -94,6 +94,25 @@ describe("createLetterRow", () => {
         expect(inputs.map((input) => input.value)).toEqual(["", ""]);
     });
 
+
+    it("clears the focused value with delete", () => {
+        const container = document.createElement("div");
+        document.body.appendChild(container);
+        const onChange = vi.fn();
+
+        createLetterRow(container, 2, /^\p{L}$/u, true, "", "", () => true, onChange);
+        const inputs = Array.from(container.querySelectorAll("input"));
+
+        press(inputs[0], "c");
+        press(inputs[1], "d");
+        inputs[0].focus();
+        press(inputs[0], "Delete");
+
+        expect(inputs.map((input) => input.value)).toEqual(["", "D"]);
+        expect(document.activeElement).toBe(inputs[0]);
+        expect(onChange).toHaveBeenLastCalledWith(["", "D"]);
+    });
+
     it("supports focus, highlight, and clear helpers", () => {
         const container = document.createElement("div");
         document.body.appendChild(container);
