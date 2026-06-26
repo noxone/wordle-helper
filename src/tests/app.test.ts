@@ -95,6 +95,20 @@ describe("initializeApp", () => {
         expect(fetchText).toHaveBeenCalledWith("/de/5.txt");
     });
 
+
+    it("matches German umlauts entered as present letters", async () => {
+        renderAppShell();
+        const fetchText = vi.fn().mockResolvedValue("ÄPFEL\nCRANE\n");
+
+        await initializeTestApp({ browserLocale: "de-DE", fetchText });
+        const presentInput = document.querySelector<HTMLInputElement>("#present-row input")!;
+
+        presentInput.dispatchEvent(new KeyboardEvent("keydown", { key: "ä", bubbles: true }));
+
+        expect(presentInput.value).toBe("Ä");
+        expect(Array.from(document.querySelectorAll("#results li")).map((li) => li.textContent)).toEqual(["ÄPFEL"]);
+    });
+
     it("connects language selection, word-length selection, state updates, and rendered results during startup", async () => {
         renderAppShell();
         const storage = {

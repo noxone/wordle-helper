@@ -50,6 +50,14 @@ export function createLetterRow(
 
     const inputs: HTMLInputElement[] = [];
 
+    function normalizeLetter(value: string): string {
+        return Array.from(value.normalize("NFC").toUpperCase()).at(0) ?? "";
+    }
+
+    function isSingleLetterInput(value: string): boolean {
+        return Array.from(value.normalize("NFC")).length === 1;
+    }
+
     function fireOnChange() {
         const letters = inputs.map((i) => i.value)
         onChange(letters);
@@ -66,9 +74,35 @@ export function createLetterRow(
         input.className =
             `w-12 h-12 text-center text-xl border rounded-lg caret-transparent ${color} ${colorFocus} transition-colors duration-500 outline-none`;
 
+        input.addEventListener("input", () => {
+            const letter = normalizeLetter(input.value);
+
+            if (letter === "") {
+                setValue("");
+                fireOnChange();
+                return;
+            }
+
+            if (!allowedCharacters.test(letter) || !isLetterValid(letter)) {
+                setValue("");
+                fireOnChange();
+                return;
+            }
+
+            if (!allowDuplicates && doesValueExist(letter, i)) {
+                setValue("");
+                fireOnChange();
+                return;
+            }
+
+            setValue(letter);
+            selectNext();
+            fireOnChange();
+        });
+
         input.addEventListener("keydown", (e) => {
             const key = e.key;
-            const upperKey = key.toUpperCase();
+            const upperKey = normalizeLetter(key);
 
             if (key === "ArrowRight") {
                 selectNext()
@@ -95,8 +129,8 @@ export function createLetterRow(
                 fireOnChange()
             }
 
-            if (allowedCharacters.test(upperKey) && isLetterValid(upperKey)) {
-                if (allowDuplicates || !doesValueExist(upperKey)) {
+            if (isSingleLetterInput(key) && allowedCharacters.test(upperKey) && isLetterValid(upperKey)) {
+                if (allowDuplicates || !doesValueExist(upperKey, i)) {
                     setValue(upperKey)
                     selectNext()
                     fireOnChange()
@@ -113,16 +147,19 @@ export function createLetterRow(
         function hasValue(): boolean {
             return inputs[i].value.length > 0
         }
-        function doesValueExist(letter: string) {
+        function doesValueExist(letter: string, exceptIndex = -1) {
             for (let i = 0; i < letterCount; ++i) {
-                if (inputs[i].value === letter) {
+                if (i !== exceptIndex && inputs[i].value === letter) {
                     return true;
                 }
             }
             return false;
         }
         function setValue(value: string, relativeIndex: number = 0) {
-            inputs[i + relativeIndex].value = value;
+            const target = inputs[i + relativeIndex];
+            if (target) {
+                target.value = value;
+            }
         }
         function selectNext() {
             select(i + 1)

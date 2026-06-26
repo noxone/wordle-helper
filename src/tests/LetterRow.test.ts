@@ -25,6 +25,34 @@ describe("createLetterRow", () => {
         expect(onChange).toHaveBeenLastCalledWith(["C", ""]);
     });
 
+
+    it("normalizes umlauts entered from key presses", () => {
+        const container = document.createElement("div");
+        const onChange = vi.fn();
+
+        createLetterRow(container, 2, /^\p{L}$/u, true, "", "", () => true, onChange);
+        const inputs = Array.from(container.querySelectorAll("input"));
+
+        press(inputs[0], "ä");
+
+        expect(inputs[0].value).toBe("Ä");
+        expect(onChange).toHaveBeenLastCalledWith(["Ä", ""]);
+    });
+
+    it("normalizes umlauts entered from input events", () => {
+        const container = document.createElement("div");
+        const onChange = vi.fn();
+
+        createLetterRow(container, 2, /^\p{L}$/u, true, "", "", () => true, onChange);
+        const inputs = Array.from(container.querySelectorAll("input"));
+
+        inputs[0].value = "a\u0308";
+        inputs[0].dispatchEvent(new Event("input", { bubbles: true }));
+
+        expect(inputs[0].value).toBe("Ä");
+        expect(onChange).toHaveBeenLastCalledWith(["Ä", ""]);
+    });
+
     it("does not enter invalid letters", () => {
         const container = document.createElement("div");
         const onChange = vi.fn();

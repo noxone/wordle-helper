@@ -60,7 +60,7 @@ export class WordleState {
     }
 
     public setCorrectLetters(letters: string[]) {
-        this.correctLetters = letters;
+        this.correctLetters = letters.map((letter) => letter.normalize("NFC").toUpperCase());
         this.update()
     }
 
@@ -69,7 +69,7 @@ export class WordleState {
     }
 
     public setPresentLetters(letters: string[]) {
-        this.presentLetters = letters;
+        this.presentLetters = letters.map((letter) => letter.normalize("NFC").toUpperCase());
         this.onPresentLetterUpdate(this);
         this.update()
     }
@@ -95,7 +95,7 @@ export class WordleState {
     }
 
     public setAbsentLetters(letters: string) {
-        this.absentLetters = letters.toUpperCase();
+        this.absentLetters = letters.normalize("NFC").toUpperCase();
         this.update()
     }
 
