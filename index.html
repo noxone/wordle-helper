@@ -5,32 +5,54 @@
   <title>Wordle Helper</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
-<body class="bg-gray-100 min-h-screen p-6">
-<div class="max-w-xl mx-auto bg-white p-6 rounded-2xl shadow">
-  <h1 class="text-3xl font-bold mb-6">Wordle Helper</h1>
+<body>
+<main class="app-shell">
+  <header class="app-header">
+    <div class="title-group">
+      <span class="eyebrow">Wordle Solver</span>
+      <h1>Wordle Helper</h1>
+    </div>
 
-  <div class="mb-6">
-    <label for="language" class="font-semibold mb-2 block">Sprache</label>
-    <select id="language" class="w-full border p-2 rounded"></select>
-  </div>
+    <div class="toolbar" aria-label="Einstellungen">
+      <div class="control-field">
+        <label for="language">Sprache</label>
+        <select id="language"></select>
+      </div>
 
-  <div class="mb-6">
-    <label for="word-length" class="font-semibold mb-2 block">Wortlänge</label>
-    <select id="word-length" class="w-full border p-2 rounded"></select>
-  </div>
+      <div class="control-field compact">
+        <label for="word-length">Länge</label>
+        <select id="word-length"></select>
+      </div>
 
-  <div class="mb-6">
-    <h2 class="font-semibold mb-0">Korrekte Positionen</h2>
-    <p class="text-sm text-gray-500 mb-2">Gibt hier alle Buchstaben an, die sich an der richtigen Stelle befinden.</p>
-    <div id="correct-row" class="flex gap-2"></div>
-  </div>
+      <button id="reset" type="button" class="reset-button" aria-label="Eingaben zurücksetzen">
+        <span aria-hidden="true">↺</span>
+        <span>Reset</span>
+      </button>
+    </div>
+  </header>
 
-  <div class="mb-6">
-    <h2 class="font-semibold mb-0">Buchstaben vorhanden</h2>
-    <p class="text-sm text-gray-500 mb-2">Gibt hier alle Buchstaben an, die im Wort vorkommen, deren genau Position du aber noch nicht kennst.</p>
-    <div class="flex place-content-between">
-      <div id="present-row" class="flex gap-2 mb-3"></div>
-      <button class="rounded bg-gray-200">
+  <section class="input-panel">
+    <div class="section-heading">
+      <h2>Korrekte Positionen</h2>
+      <div class="info-tip">
+        <button type="button" aria-label="Info zu korrekten Positionen">i</button>
+        <p role="tooltip">Gib hier alle Buchstaben an, die sich an der richtigen Stelle befinden.</p>
+      </div>
+    </div>
+    <div id="correct-row" class="letter-row"></div>
+  </section>
+
+  <section class="input-panel">
+    <div class="section-heading">
+      <h2>Buchstaben vorhanden</h2>
+      <div class="info-tip">
+        <button type="button" aria-label="Info zu vorhandenen Buchstaben">i</button>
+        <p role="tooltip">Gib Buchstaben ein, die im Wort vorkommen, deren genaue Position du aber noch nicht kennst.</p>
+      </div>
+    </div>
+    <div class="present-row-shell">
+      <div id="present-row" class="letter-row"></div>
+      <button class="chevron-button" type="button" hidden aria-hidden="true" tabindex="-1">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
           <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
         </svg>
@@ -38,28 +60,32 @@
     </div>
     <!--<input type="checkbox" id="present-checkbox"/>
     <label for="present-checkbox" class="text-sm text-gray-500">Erweiterte Auswahl für vorhandene Buchstaben</label>-->
-    <div id="present-config" class="space-y-2"></div>
-  </div>
+    <div id="present-config" class="present-config"></div>
+  </section>
 
-  <div class="mb-6">
-    <h2 class="font-semibold mb-2">Nicht enthalten</h2>
+  <section class="input-panel">
+    <div class="section-heading">
+      <h2>Nicht enthalten</h2>
+      <div class="info-tip">
+        <button type="button" aria-label="Info zu ausgeschlossenen Buchstaben">i</button>
+        <p role="tooltip">Trage Buchstaben ein, die sicher nicht im gesuchten Wort enthalten sind.</p>
+      </div>
+    </div>
     <input
             id="absent"
-            class="w-full border p-2 rounded"
+            class="absent-input"
             placeholder="z. B. TIOS"
     />
-    <button id="reset" type="button" class="mt-3 rounded bg-gray-200 px-3 py-2">
-      Zurücksetzen
-    </button>
-  </div>
+  </section>
 
-  <div>
-    <h2 class="font-semibold">
-      Treffer: <span id="count">0</span>
-    </h2>
-    <ul id="results" class="mt-2 space-y-1 text-lg"></ul>
-  </div>
-</div>
+  <section class="results-panel">
+    <div class="section-heading">
+      <h2>Treffer</h2>
+      <span id="count" class="result-count">0</span>
+    </div>
+    <ul id="results" class="results-list"></ul>
+  </section>
+</main>
 
 <script type="module" src="/src/main.ts"></script>
 </body>
